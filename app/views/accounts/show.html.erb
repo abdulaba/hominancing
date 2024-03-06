@@ -16,6 +16,15 @@
   </div>
 
   <h2>Registros</h2>
+
+  <ul class="list-group">
+    <% @account.records.each do |record| %>
+      <li class="list-group-item">
+        <%= record.amount %>
+      </li>
+    <% end %>
+  </ul>
+
 </div>
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
