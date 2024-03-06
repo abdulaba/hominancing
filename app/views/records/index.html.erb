@@ -1,2 +1,23 @@
-<h1>Records#index</h1>
-<p>Find me in app/views/records/index.html.erb</p>
+<div class="container">
+  <div class="row mt-3 align-items-start">
+    <div class="col-3 justify-content-center d-flex">
+      <%= link_to "Agregar registro", new_record_path, class: "btn btn-success fw-bold" %>
+    </div>
+    <div class="col-9">
+      <% @records.each do |record| %>
+        <div class = "d-flex justify-content-between align-items-center shadow-sm p-1 mb-4" data-bs-toggle="modal" data-bs-target="#myModal">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-coins"></i>
+            <p class="mx-3 p-0 my-0"><%= record.account.name %> </p>
+          </div>
+          <div class="d-flex align-items-center">
+            <p class="p-0 my-0"> USD <%= record.amount %> </p>
+            <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
+            <p class="p-0 my-0"> Bs.D <%= record.amount * 36 %> </p>
+          </div>
+        </div>
+        <%= render "record-modal", record: record %>
+      <% end %>
+    </div>
+  </div>
+</div>

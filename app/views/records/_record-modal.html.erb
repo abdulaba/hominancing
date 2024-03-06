@@ -1,0 +1,19 @@
+ <div class="modal" id="myModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalles del registro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><span class="fw-bold">Título:</span> <%= record.account.name %></p>
+          <p><span class="fw-bold">Monto:</span> USD <%= record.amount %></p>
+          <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at %></p>
+        </div>
+        <div class="modal-footer">
+          <%= link_to "Eliminar", record_path(record) %>
+          <%= link_to "Editar", edit_record_path(record) %>
+        </div>
+      </div>
+    </div>
+  </div>
