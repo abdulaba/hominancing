@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row mt-3 align-items-start">
+    <div class="col-3 justify-content-center d-flex">
+      <%= link_to "Agregar registro", new_record_path, class: "btn btn-success fw-bold" %>
+    </div>
+    <div class="col-9">
+      <% @records.each do |record| %>
+        <%= render "record", record: record %>
+      <% end %>
+    </div>
+  </div>
+</div>

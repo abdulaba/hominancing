@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_07_125536) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_07_143255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,11 +48,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_125536) do
     t.string "category", default: "0"
     t.string "note"
     t.bigint "account_id", null: false
-    t.bigint "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "result"
+    t.boolean "income"
     t.index ["account_id"], name: "index_records_on_account_id"
-    t.index ["plan_id"], name: "index_records_on_plan_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -72,5 +72,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_125536) do
   add_foreign_key "fixeds", "accounts"
   add_foreign_key "plans", "users"
   add_foreign_key "records", "accounts"
-  add_foreign_key "records", "plans"
 end

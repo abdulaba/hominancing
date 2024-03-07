@@ -7,9 +7,28 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-aaron = User.new(nickname: "Aaron", email: "aarondlista@gmail.com", password: "123456")
-jose = User.new(nickname: "Jose", email: "joseperalta2910@gmail.com", password: "123456")
-erika = User.new(nickname: "Erika", email: "erika.azuaje2014@gmail.com", password: "Patico2014")
+Account.destroy_all
+Plan.destroy_all
+Fixed.destroy_all
+
+aaron = User.find_or_initialize_by(nickname: "Aaron", email: "aarondlista@gmail.com")
+unless User.exists?(aaron.id)
+  aaron.password = "123456"
+  aaron.save
+  aaron = User.find(aaron.id)
+end
+jose = User.find_or_initialize_by(nickname: "Jose", email: "joseperalta2910@gmail.com")
+unless User.exists?(jose.id)
+  jose.password = "123456"
+  jose.save
+  jose = User.find(jose.id)
+end
+erika = User.find_or_initialize_by(nickname: "Erika", email: "erika.azuaje2014@gmail.com")
+unless User.exists?(erika.id)
+  erika.password = "Patico2014"
+  erika.save
+  erika = User.find(erika.id)
+end
 
 users = [aaron, jose, erika]
 
@@ -18,7 +37,7 @@ users.each do |user|
 
   puts "creando cuenta para usuario"
 
-  account = Account.new(name: "Mercantil Principal", balance: 10_000, color: "#920e0e")
+  account = Account.new(name: "Mercantil Principal #{user.nickname}", balance: 10_000, color: "#920e0e")
   account.user = user
   account.save
 
@@ -27,10 +46,13 @@ users.each do |user|
   puts "creando registros de la cuenta"
 
   10.times do
-    amount = (100..500).to_a.sample * [1, -1].sample
-    record = Record.new(amount: amount, category: 0, note: "ejemplo")
+    record = Record.new(category: 0, note: "ejemplo")
+    record.amount = (100..500).to_a.sample
+    record.income = Random.rand(2) == 1 ? true : false
+    puts record.income
     record.account = account
-    account.balance += record.amount
+    account.balance += record.income ? record.amount : -record.amount
+    record.result = account.balance
     account.save
     record.save
   end
