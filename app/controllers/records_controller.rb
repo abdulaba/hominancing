@@ -40,6 +40,6 @@ class RecordsController < ApplicationController
   end
 
   def record_params
-    params.require("record").permit(:amount, :account_id, :category, :note, :plan, :type)
+    params.require("record").permit(:amount, :account_id, :category, :note, :plan, :type, :income)
   end
 end

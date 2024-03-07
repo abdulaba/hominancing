@@ -6,6 +6,7 @@
     <div class="col-9">
       <% @records.each do |record| %>
         <%= render "record", record: record %>
+        <%= render "record-modal", record: record %>
       <% end %>
     </div>
   </div>
