@@ -48,8 +48,7 @@ users.each do |user|
   10.times do
     record = Record.new(category: 0, note: "ejemplo")
     record.amount = (100..500).to_a.sample
-    record.income = Random.rand(2) == 1 ? true : false
-    puts record.income
+    record.income = Random.rand(2) == 1
     record.account = account
     account.balance += record.income ? record.amount : -record.amount
     record.result = account.balance

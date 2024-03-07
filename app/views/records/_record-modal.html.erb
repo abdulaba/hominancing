@@ -12,10 +12,12 @@
           <p><span class="fw-bold">Nuevo balance:</span> <%= record.result %></p>
           <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at.strftime('%d de %B del %Y') %></p>
         </div>
-        <div class="modal-footer">
-          <%= link_to "Eliminar", record_path(record), class: "text-decoration-none btn btn-danger text-white", data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-          <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
-        </div>
+          <div class="modal-footer">
+            <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
+            <% if Time.now - record.created_at < 300 %>
+              <%= link_to "Eliminar", record_path(record), class: "text-decoration-none btn btn-danger text-white", data: { turbo_method: :delete, turbo_confirm: "Are you sure?"}  %>
+            <% end %>
+          </div>
       </div>
     </div>
   </div>

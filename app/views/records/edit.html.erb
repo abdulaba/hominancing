@@ -1,5 +1,8 @@
 <%= simple_form_for @record do |f| %>
   <%= f.input :note %>
   <%= f.input :category %>
+  <% if Time.now - @record.created_at< 300 %>
+    <%= f.input :amount %>
+  <% end %>
   <%= f.submit %>
 <% end %>
