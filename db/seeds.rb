@@ -25,5 +25,6 @@ puts "creando registros de la cuenta"
   amount = (100..500).to_a.sample * [1, -1].sample
   record = Record.new(amount: amount, category: 0, note: "ejemplo")
   record.account = account
-  record.save
+  puts record.valid?
+  puts record.errors.messages
 end
