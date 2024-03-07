@@ -1,7 +1,6 @@
 class Record < ApplicationRecord
   belongs_to :account
-  belongs_to :plan
+  belongs_to :plan, optional: true
 
-  validates :amount, presence: true
-  validates :category, :note, presence: true
+  validates :category, :note, :amount, :result, presence: true
 end
