@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :accounts
   has_many :plans
-  has_many :records
+  has_many :records, through: :accounts
 
   validates :nickname, uniqueness: true
 
