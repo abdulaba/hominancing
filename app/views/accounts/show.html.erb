@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card my-5">
+  <div class="card account-card my-5" style="background-color: <%= @account.color %>;">
     <div class="card-body d-flex justify-content-between">
       <div>
         <i class="fa-solid fa-coins"></i>
@@ -8,7 +8,7 @@
       <div>
         <%= @account.balance %>
         <i class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#editModal"></i>
-        <%= link_to account_path(@account), data: {turbo_method: :delete, turbo_confirm: "are you sure"} do %>
+        <%= link_to account_path(@account), data: {turbo_method: :delete, turbo_confirm: "are you sure"}, class: "text-decoration-none text-white" do %>
           <i class="fa-solid fa-trash"></i>
         <% end %>
       </div>
