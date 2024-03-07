@@ -19,8 +19,24 @@
         </div>
       </div>
     </div>
-    <div class="col bg-secondary card account-card my-5">
-    .
+    <div class="col my-5 d-flex align-items-center">
+      <%= form_with url: account_path(@account), method: :get, class: "row", data: {controller: "date-search"} do |f| %>
+        <div class="col">
+          <%= date_field_tag :start_date, params[:start_date], data: {date_search_target: "startDate", action: "change->date-search#setMin"} %>
+        </div>
+        <div class="col">
+          <%= date_field_tag :end_date, params[:end_date], data: {date_search_target: "endDate", action: "change->date-search#setMax"} %>
+        </div>
+        <div class="col d-flex">
+          <%= label_tag "Ingreso"%>
+          <%= radio_button_tag :income, params[:income], value: "T", class: "ms-1" %>
+        </div>
+        <div class="col d-flex">
+          <%= label_tag "Egreso"%>
+          <%= radio_button_tag :income, params[:income], value: "F", class: "ms-1" %>
+        </div>
+        <%= submit_tag "filtrar", class: "col" %>
+      <% end %>
     </div>
   </div>
 
