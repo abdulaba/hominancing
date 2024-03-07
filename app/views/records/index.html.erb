@@ -5,18 +5,7 @@
     </div>
     <div class="col-9">
       <% @records.each do |record| %>
-        <div class = "d-flex justify-content-between align-items-center shadow-sm p-1 mb-4" data-bs-toggle="modal" data-bs-target="#myModal<%= record.id %>">
-          <div class="d-flex align-items-center">
-            <i class="fa-solid fa-coins"></i>
-            <p class="mx-3 p-0 my-0"><%= link_to record.account.name, account_path(record.account) %> </p>
-          </div>
-          <div class="d-flex align-items-center">
-            <p class="p-0 my-0"> USD <%= record.amount %> </p>
-            <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
-            <p class="p-0 my-0"> Bs.D <%= record.amount * 36 %> </p>
-          </div>
-        </div>
-        <%= render "record-modal", record: record %>
+        <%= render "record", record: record %>
       <% end %>
     </div>
   </div>
