@@ -4,10 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["startDate", "endDate"]
 
-  connect() {
-    console.log(this.startDateTarget, this.endDateTarget)
-  }
-
   setMin() {
     this.endDateTarget.setAttribute("min", this.startDateTarget.value)
   }
