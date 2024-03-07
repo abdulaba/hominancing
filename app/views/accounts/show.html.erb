@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#newRecordModal">
     +
   </button>
 
@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="#exampleModal" aria-hidden="true">
+<div class="modal fade" id="newRecordModal" tabindex="-1" aria-labelledby="#newRecordModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -59,7 +59,7 @@
         <%= simple_form_for @account.records.new do |f| %>
           <%= f.input :amount %>
           <%= f.input :income, as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
-          <%= f.association :account %>
+          <%= f.association :account, as: :hidden %>
           <%= f.input :note %>
           <%= f.input :category %>
           <%= f.submit %>
