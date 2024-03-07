@@ -8,11 +8,12 @@
         <div class="modal-body">
           <p><span class="fw-bold">Título:</span> <%= record.account.name %></p>
           <p><span class="fw-bold">Monto:</span> USD <%= record.amount %></p>
-          <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at %></p>
+          <p>Balance de la cuenta: <%= record.result - record.amount %><p>
+          <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at.strftime('%d de %B del %Y') %></p>
         </div>
         <div class="modal-footer">
-          <%= link_to "Eliminar", record_path(record) %>
-          <%= link_to "Editar", edit_record_path(record) %>
+          <%= link_to "Eliminar", record_path(record), class: "text-decoration-none btn btn-danger text-white", data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+          <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
         </div>
       </div>
     </div>

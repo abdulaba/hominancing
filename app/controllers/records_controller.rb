@@ -1,5 +1,5 @@
 class RecordsController < ApplicationController
-  before_action :set_record, only: %i[show edit update]
+  before_action :set_record, only: %i[show edit update destroy]
 
   def index
     @records = Record.all
@@ -13,6 +13,8 @@ class RecordsController < ApplicationController
 
   def create
     @record = Record.new(record_params)
+    @record.account.balance += @record.amount
+    @record.result = @record.account.balance
     @record.save ? redirect_to(record_path(@record)) : render(:new, status: :unprocessable_entity)
   end
 
@@ -21,6 +23,11 @@ class RecordsController < ApplicationController
   def update
     @record.update(record_params)
     redirect_to(record_path(@record))
+  end
+
+  def destroy
+    @record.account.balance -= @record.amount
+    @record.destroy
   end
 
   private
