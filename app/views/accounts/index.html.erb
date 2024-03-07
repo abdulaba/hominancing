@@ -8,9 +8,7 @@
       <div class="row">
         <% @accounts.each do |account| %>
           <div class="col-6 mb-3">
-            <%= link_to account_path(account), class: "text-decoration-none" do %>
-              <%= render "account_card", account: account %>
-            <% end %>
+            <%= render "account_card", account: account %>
           </div>
         <% end %>
       </div>
