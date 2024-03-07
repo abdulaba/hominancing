@@ -1,2 +1,51 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= image_path 'banner3.jpg' %>'); height: 600px; background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+  <div class="conta">
+    <h2 class="text-white">HOMINANCING - Tu libertad financiera</h2>
+    <p class="text-white">Su dinero, sus reglas: gasto inteligente, futuro brillante</p>
+    <a href="#" class="btn btn-primary banner-button" style="position: absolute; bottom: 50px; left: 40px;">Comienza tu gestión AQUI</a>
+  </div>
+</div>
+
+<div class="conta">
+  <h1>Explora las características de Hominancing</h1>
+  <div class="tarjs ">
+    <div class="tarj w-100 m-auto mt-3 mb-5 shadow p-4 rounded-4">
+      <div class="text-content">
+        <i class="fas fa-lightbulb feature-icon"></i>
+        <h3>Gestión Intuitiva</h3>
+        <p>Controla tus finanzas de manera fácil y rápida. Con Hominancing, disfrutarás de una interfaz intuitiva que simplifica la gestión diaria de tus transacciones financieras.</p>
+      </div>
+      <img src="<%= image_path 'gestion_intuitiva.png' %>" alt="Gestión Intuitiva Imagen" class="feature-image">
+    </div>
+
+    <div class="tarj w-100 m-auto mt-3 mb-5 shadow p-4 rounded-4">
+      <img src="<%= image_path 'planificacion_personalizada.png' %>" alt="Planificación Personalizada Imagen" class="feature-image">
+      <div class="text-content">
+        <i class="fas fa-chart-line feature-icon"></i>
+        <h3>Planificación Personalizada</h3>
+        <p>Crea planes financieros adaptados a tus metas. Hominancing te permite planificar a largo plazo y establecer metas financieras personalizadas para alcanzar tus objetivos de manera efectiva.</p>
+      </div>
+    </div>
+
+    <div class="tarj w-100 m-auto mt-3 mb-5 shadow p-4 rounded-4">
+      <div class="text-content">
+        <i class="fas fa-shield-alt feature-icon"></i>
+        <h3>Seguridad Garantizada</h3>
+        <p>Protegemos tus datos para que te sientas tranquilo. En Hominancing, la seguridad es nuestra prioridad. Utilizamos las últimas tecnologías para garantizar la protección de tu información financiera.</p>
+      </div>
+      <img src="<%= image_path('seguridad_garantizada.jpg') %>" alt="Seguridad Garantizada Imagen" class="feature-image">
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(window).scroll(function() {
+      $('.tarj').each(function() {
+        if ($(this).offset().top < $(window).scrollTop() + $(window).height() - 200) {
+          $(this).addClass('visible');
+        }
+      });
+    });
+  });
+</script>
