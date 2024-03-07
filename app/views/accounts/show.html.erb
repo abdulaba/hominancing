@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card m-5">
+  <div class="card my-5">
     <div class="card-body d-flex justify-content-between">
       <div>
         <i class="fa-solid fa-coins"></i>
@@ -19,8 +19,26 @@
 
   <ul class="list-group">
     <% @account.records.each do |record| %>
-      <li class="list-group-item">
-        <%= record.amount %>
+      <li class="list-group-item my-1">
+        <div class="d-flex justify-content-between">
+          <span>
+            <i class="fa-solid fa-bowl-food"></i>
+            <span class="badge rounded-pill text-bg-dark">
+              <%= record.account.name %>
+            </span>
+          </span>
+          <span>
+            <%= record.note %>
+          </span>
+          <span>
+            <%= record.amount.abs() %>
+            <% if record.amount < 0%>
+              <i class="fa-solid fa-arrow-trend-down text-danger"></i>
+            <% else %>
+              <i class="fa-solid fa-arrow-trend-up text-success"></i>
+            <% end %>
+          </span>
+        </div>
       </li>
     <% end %>
   </ul>
