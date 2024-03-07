@@ -1,7 +1,7 @@
 <div class = "d-flex justify-content-between align-items-center shadow-sm p-1 mb-4" data-bs-toggle="modal" data-bs-target="#myModal<%= record.id %>">
   <div class="d-flex align-items-center">
     <i class="fa-solid fa-coins"></i>
-    <p class="mx-3 p-0 my-0 account-pill" style="background-color: <%= record.account.color %>;"> <%= record.account.name %> </p>
+    <span class="mx-3 account-pill" style="background-color: <%= record.account.color %>;"> <%= record.account.name %> </span>
   </div>
   <div class="d-flex align-items-center">
     <p class="p-0 my-0"> USD <%= record.amount %> </p>
