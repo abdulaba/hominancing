@@ -1,0 +1,16 @@
+<div class="w-50 m-auto mt-3 mb-5 shadow p-4 rounded-4">
+  <%= render 'form' %>
+</div>
+
+<div class="w-50 m-auto mt-3 mb-5 shadow p-4 rounded-4" id="plans_list">
+  <h2>Lista de Planes</h2>
+  <ul>
+    <% @plans.each do |plan| %>
+      <li>
+        <%= "#{plan.title} - #{plan.goal}" %>
+        <%= link_to "Editar", edit_plan_path(plan), class: "btn btn-warning" %>
+        <%= button_to 'Eliminar', @plan, method: :delete, data: { confirm: '¿Estás seguro?' }, class: 'btn btn-danger' %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,0 +1,5 @@
+<%= simple_form_for @plan, url: plans_path, defaults: { input_html: { class: 'form-input-dark' } } do |f| %>
+  <%= f.input :title, label: "Título del Plan" %>
+  <%= f.input :goal, label: "Meta del Plan", input_html: { step: 0.01 } %>
+  <%= f.button :submit, "Crear Plan", class: "banner-button w-100 text-center" %>
+<% end %>
