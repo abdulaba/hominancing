@@ -1,7 +1,7 @@
 <%= simple_form_for @record do |f| %>
   <%= f.input :amount %>
   <%= f.input :income, as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
-  <%= f.association :account %>
+  <%= f.association :account, collection: current_user.accounts %>
   <%= f.input :note %>
   <%= f.input :category %>
   <%= f.submit %>
