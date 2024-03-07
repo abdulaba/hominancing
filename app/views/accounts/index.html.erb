@@ -9,17 +9,7 @@
         <% @accounts.each do |account| %>
           <div class="col-6 mb-3">
             <%= link_to account_path(account), class: "text-decoration-none" do %>
-                <div class="card account-card shadow" style = "background-color: <%= account.color %>;">
-                  <div class="card-body d-flex justify-content-between">
-                    <div>
-                      <i class="fa-solid fa-coins"></i>
-                      <%= account.name %>
-                    </div>
-                    <div>
-                      <%= account.balance %>
-                    </div>
-                  </div>
-                </div>
+              <%= render "account_card", account: account %>
             <% end %>
           </div>
         <% end %>
