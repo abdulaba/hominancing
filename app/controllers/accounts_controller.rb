@@ -6,7 +6,13 @@ class AccountsController < ApplicationController
     @account = Account.new
   end
 
-  def show; end
+  def show
+    @records = @account.records
+
+    @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
+    @records = @records.where("created_at <= ?", params[:end_date]) unless params[:end_date].blank?
+    @records = @records.where(income: params[:income] == "T") unless params[:income].blank?
+  end
 
   def new
     @account = Account.new

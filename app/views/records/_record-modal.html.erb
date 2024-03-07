@@ -6,9 +6,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <%= link_to account_path(record.account), class: "text-decoration-none" do %>
-            <%= render "accounts/account_card", account: record.account %>
-          <% end %>
+          <%= render "accounts/account_card", account: record.account %>
           <p><span class="fw-bold">Antiguo balance:</span> <%= record.result - record.amount %><p>
           <p><span class="fw-bold">Monto del registro:</span> USD <%= record.amount %></p>
           <p><span class="fw-bold">Nuevo balance:</span> <%= record.result %></p>
