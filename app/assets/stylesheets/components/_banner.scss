@@ -27,7 +27,7 @@
   }
 }
 
-.container {
+.conta {
   width: 80%;
   margin: 20px auto;
 
@@ -46,24 +46,14 @@
     color: white;
   }
 
-  .card {
-    width: 1000px;
+  .tarj {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 20px;
-    border: none;
-    border-radius: 10px;
-    margin-bottom: 20px;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
-
-    &.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
 
     .feature-icon {
       color: #3498db;
@@ -90,19 +80,19 @@
     }
   }
 
-  .cards {
+  .tarjs {
     display: flex;
     flex-wrap: wrap;
     margin: 50px 0;
 
-    .card {
+    .tarj {
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.5s ease, transform 0.5s ease;
       flex-direction: row-reverse;
     }
 
-    .card.visible {
+    .tarj.visible {
       opacity: 1;
       transform: translateY(0);
     }
