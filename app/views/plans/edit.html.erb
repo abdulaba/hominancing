@@ -1,7 +1,4 @@
-<div class="w-50 m-auto mt-3 mb-5 shadow p-4 rounded-4">
-  <%= simple_form_for @plan, url: (@plan.persisted? ? plan_path(@plan) : plans_path), method: (@plan.persisted? ? :patch : :post), defaults: { input_html: { class: 'form-input-dark' } } do |f| %>
-    <%= f.input :title, label: "Título del Plan" %>
-    <%= f.input :goal, label: "Meta del Plan", input_html: { step: 0.01 } %>
-    <%= f.button :submit, (@plan.persisted? ? "Actualizar Plan" : "Crear Plan"), class: "banner-button w-100 text-center" %>
-  <% end %>
-</div>
+  <div class="container">
+    <%= render "edit_plan", plant: @plant, colors: @colors %>
+  </div>
+
