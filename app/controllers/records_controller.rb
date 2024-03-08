@@ -13,24 +13,33 @@ class RecordsController < ApplicationController
 
   def create
     @record = Record.new(record_params)
-    @record.account.balance += @record.income ? @record.amount : -@record.amount
-    @record.account.save
-    @record.result = @record.account.balance
-    @record.save ? redirect_to(records_path) : render(:new, status: :unprocessable_entity)
+    @record.result = @record.income ? @record.amount + @record.account.balance : @record.account.balance - @record.amount if @record.account.balance
+    if @record.save
+      @record.account.balance += @record.income ? @record.amount : -@record.amount
+      @record.account.save
+      redirect_to(records_path)
+    else
+      render(:new, status: :unprocessable_entity)
+    end
   end
 
   def edit; end
 
   def update
     @records = current_user.records.where(created_at: (Time.now - 5.minute)..(Time.now)).order(created_at: :desc)
-    @records.each do |record|
-      record.result += @record.income ? record_params[:amount].to_f - @record.amount : -(record_params[:amount].to_f - @record.amount)
-      record.save
+    old_amount = @record.amount
+    if @record.update(record_params)
+      @records.each do |record|
+        record.result += @record.income ? record_params[:amount].to_f - old_amount : -(record_params[:amount].to_f - old_amount)
+        record.save
+      end
+      @record.account.balance += @record.income ? record_params[:amount].to_f - old_amount : -(record_params[:amount].to_f -old_amount)
+      @record.account.save
+      redirect_to(records_path)
+    else
+      render(:new, status: :unprocessable_entity)
     end
-    @record.account.balance += @record.income ? record_params[:amount].to_f - @record.amount : -(record_params[:amount].to_f - @record.amount)
-    @record.account.save
-    @record.update(record_params)
-    redirect_to(records_path)
+
   end
 
   def destroy

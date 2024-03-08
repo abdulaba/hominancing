@@ -11,6 +11,12 @@ Account.destroy_all
 Plan.destroy_all
 Fixed.destroy_all
 
+COLORS = %w[#670f22 #9a0526 #E20000 #ff4040 #FF7676
+        #082338 #0303B5 #003785 #1465BB #2196F3
+        #005200 #007B00 #258D19 #4EA93B #588100]
+
+ACCOUNTS = %w[bancamiga mercantil banplus banesco efectivo]
+
 aaron = User.find_or_initialize_by(nickname: "Aaron", email: "aarondlista@gmail.com")
 unless User.exists?(aaron.id)
   aaron.password = "123456"
@@ -35,13 +41,14 @@ users = [aaron, jose, erika]
 users.each do |user|
   puts "usuario: #{user.email}"
 
-  puts "creando cuenta para usuario"
+  puts "creando cuentas para usuario"
 
-  account = Account.new(name: "Mercantil Principal #{user.nickname}", balance: 10_000, color: "#920e0e")
-  account.user = user
-  account.save
-
-  puts "cuenta creada para #{user.email}:\n nombre: #{account.name}, balance: #{account.balance}"
+  ACCOUNTS.each do |acct|
+    account = Account.new(name: acct.capitalize, balance: 10_000, color: COLORS.sample)
+    account.user = user
+    account.save
+    puts "cuentas creadas para #{user.email}:\n nombre: #{account.name}, balance: #{account.balance}"
+  end
 
   puts "creando registros de la cuenta"
 
@@ -49,10 +56,10 @@ users.each do |user|
     record = Record.new(category: 0, note: "ejemplo")
     record.amount = (100..500).to_a.sample
     record.income = Random.rand(2) == 1
-    record.account = account
-    account.balance += record.income ? record.amount : -record.amount
-    record.result = account.balance
-    account.save
+    record.account = user.accounts.sample
+    record.account.balance += record.income ? record.amount : -record.amount
+    record.result = record.account.balance
+    record.account.save
     record.save
   end
 end
