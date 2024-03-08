@@ -1,2 +1,6 @@
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<% if notice %>
+  <div data-controller="flashes" data-flashes-notification-value="<%= notice %>" data-flashes-type-value="success"></div>
+<% end %>
+<% if alert %>
+  <div data-controller="flashes" data-flashes-notification-value="<%= alert %>" data-flashes-type-value="error"></div>
+<% end %>
