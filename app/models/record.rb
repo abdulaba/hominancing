@@ -2,7 +2,7 @@ class Record < ApplicationRecord
   belongs_to :account
   belongs_to :plan, optional: true
 
-  validates :category, :note, :amount, :result, presence: true
+  validates :category, :note, :amount, :result, :account, presence: true
   validate :account_balance_cannot_be_zero
 
   def account_balance_cannot_be_zero

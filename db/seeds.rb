@@ -52,7 +52,7 @@ users.each do |user|
 
   puts "creando registros de la cuenta"
 
-  10.times do
+  60.times do
     record = Record.new(category: 0, note: "ejemplo")
     record.amount = (100..500).to_a.sample
     record.income = Random.rand(2) == 1

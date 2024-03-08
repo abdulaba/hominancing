@@ -2,7 +2,7 @@ class RecordsController < ApplicationController
   before_action :set_record, only: %i[show edit update destroy]
 
   def index
-    @records = current_user.records.order(created_at: :desc)
+    @records = current_user.records.limit(10).order(created_at: :desc)
   end
 
   def show; end
@@ -30,16 +30,15 @@ class RecordsController < ApplicationController
     old_amount = @record.amount
     if @record.update(record_params)
       @records.each do |record|
-        record.result += @record.income ? record_params[:amount].to_f - old_amount : -(record_params[:amount].to_f - old_amount)
+        record.result += @record.income ? @record.amount - old_amount : -(@record.amount - old_amount)
         record.save
       end
-      @record.account.balance += @record.income ? record_params[:amount].to_f - old_amount : -(record_params[:amount].to_f -old_amount)
+      @record.account.balance += @record.income ? @record.amount - old_amount : -(@record.amount - old_amount)
       @record.account.save
       redirect_to(records_path)
     else
-      render(:new, status: :unprocessable_entity)
+      render(:edit, status: :unprocessable_entity)
     end
-
   end
 
   def destroy
