@@ -17,7 +17,7 @@ class AccountsController < ApplicationController
     @tendency = grahp_data(@tendency) { |value| value.first.result }
 
     @expence = @records.where(income: false).group_by { |record| record[:category] }
-    @expence = grahp_data(@expence) { |value| value.count }
+    @expence = grahp_data(@expence) { |value| value.map(&:amount).sum }
 
   end
 
