@@ -9,8 +9,27 @@
       <li>
         <%= "#{plan.title} - #{plan.goal}" %>
         <%= link_to "Editar", edit_plan_path(plan), class: "btn btn-warning" %>
-        <%= button_to 'Eliminar', @plan, method: :delete, data: { confirm: '¿Estás seguro?' }, class: 'btn btn-danger' %>
+        <%= button_to 'Eliminar', plan, method: :delete, data: { confirm: '¿Estás seguro?' }, class: 'btn btn-danger' %>
       </li>
     <% end %>
   </ul>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <h2>Nuevo Plan</h2>
+  <%= render 'form' %>
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <% @plans.each do |plan| %>
+          <div class="col-6 mb-3">
+            <%= link_to plan_path(plan), class: "text-decoration-none" do %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
