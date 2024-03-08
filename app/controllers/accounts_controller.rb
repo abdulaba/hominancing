@@ -8,7 +8,6 @@ class AccountsController < ApplicationController
 
   def show
     @records = @account.records.order(created_at: :desc)
-
     @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
     @records = @records.where("created_at <= ?", DateTime.parse(params[:end_date])+23.hour) unless params[:end_date].blank?
     @records = @records.where(income: params[:income] == "T") unless params[:income].blank?
@@ -18,7 +17,6 @@ class AccountsController < ApplicationController
 
     @expence = @records.where(income: false).group_by { |record| record[:category] }
     @expence = grahp_data(@expence) { |value| value.map(&:amount).sum }
-
   end
 
   def new
