@@ -76,3 +76,6 @@ group :test do
 end
 
 gem "devise"
+
+# gema para las graficas
+gem "chartkick"

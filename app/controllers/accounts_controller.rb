@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @records = @account.records
+    @records = @account.records.reverse
 
     @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
     @records = @records.where("created_at <= ?", params[:end_date]) unless params[:end_date].blank?
