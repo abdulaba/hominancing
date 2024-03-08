@@ -7,11 +7,18 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @records = @account.records
+    @records = @account.records.order(created_at: :desc)
 
     @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
-    @records = @records.where("created_at <= ?", params[:end_date]) unless params[:end_date].blank?
+    @records = @records.where("created_at <= ?", DateTime.parse(params[:end_date])+23.hour) unless params[:end_date].blank?
     @records = @records.where(income: params[:income] == "T") unless params[:income].blank?
+
+    @tendency = @records.group_by { |record| record[:created_at].to_date.to_s }
+    @tendency = grahp_data(@tendency) { |value| value.first.result }
+
+    @expence = @records.where(income: false).group_by { |record| record[:category] }
+    @expence = grahp_data(@expence) { |value| value.map(&:amount).sum }
+
   end
 
   def new
@@ -45,6 +52,14 @@ class AccountsController < ApplicationController
   end
 
   private
+
+  def grahp_data(data)
+    hash = {}
+    data.each do |key, value|
+      hash[key] = yield(value)
+    end
+    hash
+  end
 
   def set_account
     @account = Account.find(params[:id])
