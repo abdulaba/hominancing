@@ -46,6 +46,12 @@
     +
   </button>
 
+  <div class="row">
+    <div class="col-6">
+      <%= area_chart @data, title: "Tendencia del saldo", colors: [@account.color] %>
+    </div>
+  </div>
+
   <h2>Registros</h2>
   <% @records.each do |record| %>
     <%= render "records/record", record: record %>
