@@ -13,28 +13,12 @@ class AccountsController < ApplicationController
     @records = @records.where("created_at <= ?", DateTime.parse(params[:end_date])+23.hour) unless params[:end_date].blank?
     @records = @records.where(income: params[:income] == "T") unless params[:income].blank?
 
-    @data = {}
+    @tendency = @records.group_by { |record| record[:created_at].to_date.to_s }
+    @tendency = grahp_data(@tendency) { |value| value.first.result }
 
-    start_date = DateTime.parse(@records.last.created_at.to_date.to_s) unless @records.last.nil?
-    end_date = DateTime.parse(@records.first.created_at.to_date.to_s) + 23.hour unless @records.last.nil?
-    start_date = DateTime.parse(params[:start_date]) unless params[:start_date].blank?
-    end_date = DateTime.parse(params[:end_date]) + 23.hour unless params[:end_date].blank?
-    default_value = 0
+    @expence = @records.where(income: false).group_by { |record| record[:category] }
+    @expence = grahp_data(@expence) { |value| value.count }
 
-    days = (end_date - start_date).to_i + 1
-
-    days.times do
-      record = @records.where("created_at >= ? AND created_at <= ?", start_date, start_date+23.hour).first
-
-      result = default_value if record.nil?
-      unless record.nil?
-        result = record.result
-        default_value = result
-      end
-
-      @data[start_date.to_date.to_s] = result
-      start_date += 24.hour
-    end
   end
 
   def new
@@ -68,6 +52,14 @@ class AccountsController < ApplicationController
   end
 
   private
+
+  def grahp_data(data)
+    hash = {}
+    data.each do |key, value|
+      hash[key] = yield(value)
+    end
+    hash
+  end
 
   def set_account
     @account = Account.find(params[:id])

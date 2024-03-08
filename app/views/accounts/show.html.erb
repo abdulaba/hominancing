@@ -48,9 +48,14 @@
 
   <div class="row">
     <div class="col-6">
-      <%= area_chart @data, title: "Tendencia del saldo", colors: [@account.color] %>
+      <%= area_chart @tendency, title: "Tendencia del saldo", colors: [@account.color] %>
+    </div>
+    <div class="col-6">
+      <%= pie_chart @expence, title: "gastos por categoria" %>
     </div>
   </div>
+
+  <%= console %>
 
   <h2>Registros</h2>
   <% @records.each do |record| %>
