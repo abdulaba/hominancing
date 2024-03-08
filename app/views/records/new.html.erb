@@ -2,6 +2,7 @@
   <%= f.input :amount %>
   <%= f.input :income, as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
   <%= f.association :account, collection: current_user.accounts %>
+  <%= f.association :plan, collection: current_user.plans %>
   <%= f.input :note %>
   <%= f.input :category %>
   <%= f.submit %>

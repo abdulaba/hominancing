@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
           <%= render "accounts/account_card", account: record.account %>
-          <p><span class="fw-bold">Antiguo balance:</span> <%= record.result - record.amount %><p>
+          <p><span class="fw-bold">Antiguo balance:</span> <%= record.income ? record.result - record.amount : record.result + record.amount %><p>
           <p><span class="fw-bold">Monto del registro:</span> USD <%= record.amount %></p>
           <p><span class="fw-bold">Nuevo balance:</span> <%= record.result %></p>
           <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at.strftime('%d de %B del %Y') %></p>
