@@ -3,7 +3,7 @@
     <div class="col-3 justify-content-center d-flex">
       <%= link_to "Agregar registro", new_record_path, class: "btn btn-success fw-bold" %>
     </div>
-    <div class="col-9">
+    <div class="col-9" data-controller = "render-more">
       <% @records.each do |record| %>
         <%= render "record", record: record %>
         <%= render "record-modal", record: record %>
