@@ -6,16 +6,18 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p><span class="fw-bold">Cuenta:</span> <%= link_to record.account.name, account_path(record.account) %></p>
+          <%= render "accounts/account_card", account: record.account %>
           <p><span class="fw-bold">Antiguo balance:</span> <%= record.result - record.amount %><p>
           <p><span class="fw-bold">Monto del registro:</span> USD <%= record.amount %></p>
           <p><span class="fw-bold">Nuevo balance:</span> <%= record.result %></p>
           <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at.strftime('%d de %B del %Y') %></p>
         </div>
-        <div class="modal-footer">
-          <%= link_to "Eliminar", record_path(record), class: "text-decoration-none btn btn-danger text-white", data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-          <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
-        </div>
+          <div class="modal-footer">
+            <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
+            <% if Time.now - record.created_at < 300 %>
+              <%= link_to "Eliminar", record_path(record), class: "text-decoration-none btn btn-danger text-white", data: { turbo_method: :delete, turbo_confirm: "Are you sure?"}  %>
+            <% end %>
+          </div>
       </div>
     </div>
   </div>

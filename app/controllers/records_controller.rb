@@ -22,11 +22,23 @@ class RecordsController < ApplicationController
   def edit; end
 
   def update
+    @records = current_user.records.where(created_at: (Time.now - 5.minute)..(Time.now)).order(created_at: :desc)
+    @records.each do |record|
+      record.result += @record.income ? record_params[:amount].to_f - @record.amount : -(record_params[:amount].to_f - @record.amount)
+      record.save
+    end
+    @record.account.balance += @record.income ? record_params[:amount].to_f - @record.amount : -(record_params[:amount].to_f - @record.amount)
+    @record.account.save
     @record.update(record_params)
     redirect_to(records_path)
   end
 
   def destroy
+    @records = current_user.records.where(created_at: (Time.now - 5.minute)..(Time.now)).order(created_at: :desc)
+    @records.each do |record|
+      record.result -= @record.income ? @record.amount : -@record.amount
+      record.save
+    end
     @record.account.balance -= @record.income ? @record.amount : -@record.amount
     @record.account.save
     @record.destroy

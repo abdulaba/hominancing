@@ -1,5 +1,12 @@
-<%= simple_form_for @plan, url: plans_path, defaults: { input_html: { class: 'form-input-dark' } } do |f| %>
-  <%= f.input :title, label: "Título del Plan" %>
-  <%= f.input :goal, label: "Meta del Plan", input_html: { step: 0.01 } %>
-  <%= f.button :submit, "Crear Plan", class: "banner-button w-100 text-center" %>
+<%= simple_form_for(@plan) do |f| %>
+  <%= f.input :title %>
+  <%= f.input :goal %>
+  <%= f.input :color, as: :color, input_html: { list: "options" } %>
+  <datalist id="options">
+    <% @colors.each do |color| %>
+      <option value="<%= color %>"><%= color %></option>
+    <% end %>
+  </datalist>
+  <%= f.input :date, as: :date %>
+  <%= f.submit class: "btn btn-primary w-100" %>
 <% end %>
