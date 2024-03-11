@@ -6,10 +6,13 @@ class PlansController < ApplicationController
     @plan = Plan.new
     @plans = current_user.plans
   end
-
   def show
     @progress_percentage = calculate_progress_percentage(@plan)
     @records = @plan.records
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new
