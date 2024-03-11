@@ -2,11 +2,12 @@ class AccountsController < ApplicationController
   before_action :set_account, only: %i[show edit update destroy]
   before_action :set_colors
   def index
-    @accounts = current_user.accounts
-    @account = Account.new
+    @accounts = Account.all
+    @accounts = policy_scope(Account)
   end
 
   def show
+    authorize @account
     @records = @account.records.order(created_at: :desc)
     @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
     @records = @records.where("created_at <= ?", DateTime.parse(params[:end_date]) + 23.hour) unless params[:end_date].blank?
@@ -21,11 +22,13 @@ class AccountsController < ApplicationController
 
   def new
     @account = Account.new
+    authorize @account
   end
 
   def create
     @account = Account.new(account_params)
     @account.user = current_user
+    authorize @account
 
     if @account.save
       redirect_to account_path(@account), notice: "Cuenta creada!"
@@ -34,9 +37,12 @@ class AccountsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @account
+  end
 
   def update
+    authorize @account
     if @account.update(account_params)
       redirect_to account_path(@account), notice: "Cambios hechos!"
     else
@@ -45,6 +51,7 @@ class AccountsController < ApplicationController
   end
 
   def destroy
+    authorize @account
     @account.destroy
     redirect_to accounts_path
   end
