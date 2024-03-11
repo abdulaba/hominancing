@@ -1,9 +1,15 @@
-class RecordPolicy < ApplicationPolicy
+class PlanPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all
+      scope.where(user: user)
     end
+  end
+
+  def index; end
+
+  def show?
+    record.user == user
   end
 
   def new?
@@ -15,14 +21,14 @@ class RecordPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.account.user = user
+    record.user == user
   end
 
   def update?
-    record.account.user = user
+    record.user == user
   end
 
   def destroy?
-    record.account.user = user
+    record.user == user
   end
 end
