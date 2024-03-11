@@ -6,6 +6,8 @@ class FixedsController < ApplicationController
   end
 
   def show
+    @nex_pay = DateTime.parse(@fixed.start_date.to_s)
+    #.strftime("%u") saber el dia de la semana
   end
 
   def new
@@ -44,6 +46,6 @@ class FixedsController < ApplicationController
   end
 
   def fixed_params
-    params.require("fixed").permit(:periodicity, :amount, :category, :account_id, :title, :income)
+    params.require("fixed").permit(:periodicity, :amount, :category, :account_id, :title, :income, :start_date)
   end
 end

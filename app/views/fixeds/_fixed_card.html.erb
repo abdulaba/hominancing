@@ -1,5 +1,9 @@
 <%= link_to fixed_path(fixed), class: "text-decoration-none" do %>
   <div class="card">
     <%= fixed.title %>
+    <%= fixed.income %>
+    <%= fixed.amount %>
+    <%= fixed.account.name %>
+    <%= fixed.periodicity %>
   </div>
 <% end %>

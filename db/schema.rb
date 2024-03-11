@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_194834) do
     t.datetime "updated_at", null: false
     t.boolean "income"
     t.string "title"
+    t.datetime "start_date"
     t.index ["account_id"], name: "index_fixeds_on_account_id"
   end
 
