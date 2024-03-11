@@ -24,20 +24,24 @@
     <div class="col my-5 d-flex align-items-center">
       <%= form_with url: account_path(@account), method: :get, class: "row", data: {controller: "date-search"} do |f| %>
         <div class="col">
-          <%= date_field_tag :start_date, params[:start_date], data: {date_search_target: "startDate", action: "change->date-search#setMin"} %>
+          <%= date_field_tag :start_date, params[:start_date],
+          data: {date_search_target: "startDate", action: "change->date-search#setMin"},
+          class:"form-control" %>
         </div>
         <div class="col">
-          <%= date_field_tag :end_date, params[:end_date], data: {date_search_target: "endDate", action: "change->date-search#setMax"} %>
+          <%= date_field_tag :end_date, params[:end_date],
+          data: {date_search_target: "endDate", action: "change->date-search#setMax"},
+          class:"form-control"  %>
         </div>
         <div class="col d-flex">
           <%= label_tag "Ingreso"%>
-          <%= radio_button_tag :income, params[:income], value: "T", class: "ms-1" %>
+          <%= radio_button_tag :income, params[:income], value: "T", class: "ms-1 form-check-input" %>
         </div>
         <div class="col d-flex">
           <%= label_tag "Egreso"%>
-          <%= radio_button_tag :income, params[:income], value: "F", class: "ms-1" %>
+          <%= radio_button_tag :income, params[:income], value: "F", class: "ms-1 form-check-input" %>
         </div>
-        <%= submit_tag "filtrar", class: "col" %>
+        <%= submit_tag "filtrar", class: "col btn btn-outline-primary" %>
       <% end %>
     </div>
   </div>
@@ -48,7 +52,7 @@
 
   <div class="row">
     <div class="col-6">
-      <%= area_chart @tendency, title: "Tendencia del saldo", colors: [@account.color] %>
+      <%= area_chart @tendency, title: "Tendencia del saldo", colors: [@account.color], points: false %>
     </div>
     <div class="col-6">
       <%= pie_chart @expence, title: "gastos por categoria" %>
@@ -95,5 +99,3 @@
     </div>
   </div>
 </div>
-
-<% console %>

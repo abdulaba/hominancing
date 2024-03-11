@@ -2,6 +2,7 @@ class RecordsController < ApplicationController
   before_action :set_record, only: %i[show edit update destroy]
 
   def index
+    @records = policy_scope(Record)
     @records = current_user.records.limit(10).order(created_at: :desc)
   end
 
