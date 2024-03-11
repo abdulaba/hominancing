@@ -35,7 +35,7 @@
     <div class="card-footer d-flex justify-content-between">
       <div>Balance: <%= number_to_currency(@plan.balance) %></div>
         <% if @progress_percentage.present? %>
-      <div>Avance del progreso: <%= number_to_currency((@plan.balance * @progress_percentage / 100).round(2)) %></div>
+        <div>Avance del progreso: <%= @progress_percentage %> %</div>
           <% end %>
         </div>
       </div>

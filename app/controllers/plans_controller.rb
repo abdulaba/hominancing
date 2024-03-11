@@ -5,6 +5,8 @@ class PlansController < ApplicationController
   def index
     @plan = Plan.new
     @plans = policy_scope(Plan)
+    @progress_percentages = @plans.map { |plan| calculate_progress_percentage(plan) }
+
   end
 
 def show
@@ -92,9 +94,7 @@ end
     elsif plan.status
       return 100
     else
-      return (plan.balance.to_f / plan.goal) * 100
+      return ((plan.balance.to_f / plan.goal) * 100).round(2)
     end
   end
-
-
 end

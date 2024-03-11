@@ -17,7 +17,7 @@
               <small>Fecha de meta: <%= plan.date.strftime('%Y-%m-%d') if plan.date.present? %></small>
             </div>
             <div class="plan-card progress mt-2" style="width: 100%; height: 10px;">
-              <div class="progress-bar rounded" role="progressbar" style="width: <%= @progress_percentage %>%; max-width: 100%;" aria-valuenow="<%= @progress_percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar rounded" role="progressbar" style="width: <%= progress_percentage %>%; max-width: 100%;" aria-valuenow="<%= progress_percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
         </div>
