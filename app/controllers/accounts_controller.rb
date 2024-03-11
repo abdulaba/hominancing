@@ -28,7 +28,7 @@ class AccountsController < ApplicationController
     @account.user = current_user
 
     if @account.save
-      redirect_to account_path(@account)
+      redirect_to account_path(@account), notice: "Cuenta creada!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class AccountsController < ApplicationController
 
   def update
     if @account.update(account_params)
-      redirect_to account_path(@account)
+      redirect_to account_path(@account), notice: "Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
     end

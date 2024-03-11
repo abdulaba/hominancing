@@ -21,7 +21,7 @@ class PlansController < ApplicationController
     @plan.user = current_user
 
     if @plan.save
-      redirect_to plans_path
+      redirect_to plans_path, notice: "¡Plan creado!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class PlansController < ApplicationController
 
   def update
     if @plan.update(plan_params)
-      redirect_to plan_path(@plan)
+      redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
     end
