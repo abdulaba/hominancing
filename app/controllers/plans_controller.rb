@@ -4,21 +4,24 @@ class PlansController < ApplicationController
 
   def index
     @plan = Plan.new
-    @plans = current_user.plans
+    @plans = policy_scope(Plan)
   end
 
   def show
+    authorize @plan
     @progress_percentage = calculate_progress_percentage(@plan)
     @records = @plan.records
   end
 
   def new
     @plan = Plan.new
+    authorize @plan
   end
 
   def create
     @plan = Plan.new(plan_params)
     @plan.user = current_user
+    authorize @plan
 
     if @plan.save
       redirect_to plans_path, notice: "¡Plan creado!"
@@ -27,9 +30,12 @@ class PlansController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @plan
+  end
 
   def update
+    authorize @plan
     if @plan.update(plan_params)
       redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
     else
@@ -38,6 +44,7 @@ class PlansController < ApplicationController
   end
 
   def destroy
+    authorize @plan
     @plan.destroy
     redirect_to plans_path
   end
