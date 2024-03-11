@@ -15,14 +15,14 @@ class RecordPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.account.user = user
+    record.account.user == user
   end
 
   def update?
-    record.account.user = user
+    record.account.user == user
   end
 
   def destroy?
-    record.account.user = user
+    record.account.user == user
   end
 end
