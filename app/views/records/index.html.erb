@@ -1,13 +1,19 @@
 <div class="container">
   <div class="row mt-3 align-items-start">
     <div class="col-3 justify-content-center d-flex">
-      <%= link_to "Agregar registro", new_record_path, class: "btn btn-success fw-bold" %>
+      <button data-bs-toggle="modal" data-bs-target="#new-record-modal" class="btn btn-success fw-bold w-100">
+        Agregar registro
+      </button>
+      <%= render "new-record-modal", record: @record %>
     </div>
-    <div class="col-9" data-controller = "render-more">
-      <% @records.each do |record| %>
-        <%= render "record", record: record %>
-        <%= render "record-modal", record: record %>
-      <% end %>
+    <div class="col-9" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.id %>">
+      <div class="record-container" data-render-more-target = "recordContainer">
+        <% @records.each do |record| %>
+          <%= render "record", record: record %>
+          <%= render "record-modal", record: record %>
+        <% end %>
+      </div>
+      <p data-action="click->render-more#update">Ver más...</p>
     </div>
   </div>
 </div>
