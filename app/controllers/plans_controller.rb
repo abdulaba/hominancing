@@ -6,9 +6,11 @@ class PlansController < ApplicationController
     @plan = Plan.new
     @plans = current_user.plans
   end
+
   def show
     @progress_percentage = calculate_progress_percentage(@plan)
-    @records = @plan.records
+    @balance_records = @plan.records.limit(10).order(created_at: :desc)
+    @status = @plan.completed? ? 'Completado' : 'En progreso'    @plan = @plan.reload
     respond_to do |format|
       format.html
       format.turbo_stream
@@ -34,6 +36,7 @@ class PlansController < ApplicationController
 
   def update
     if @plan.update(plan_params)
+      @plan.update_balance
       redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
@@ -43,6 +46,10 @@ class PlansController < ApplicationController
   def destroy
     @plan.destroy
     redirect_to plans_path
+  end
+
+  def completed?
+    balance >= goal
   end
 
   private
@@ -58,16 +65,18 @@ class PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :goal, :color, :date)
+    params.require(:plan).permit(:goal, :title, :user_id, :color, :date, :status, :balance)
   end
 
   def calculate_progress_percentage(plan)
     total_income = plan.records.where(income: true).sum(:amount)
     total_expense = plan.records.where(income: false).sum(:amount)
 
-    return 0 if plan.goal.zero? # Para evitar división por cero
+    plan.balance = total_income - total_expense
+    plan.status = (plan.balance >= plan.goal)
 
-    ((total_income - total_expense) / plan.goal) * 100
+    return 0 if plan.goal.zero?
+
+    ((plan.balance) / plan.goal) * 100
   end
-
 end
