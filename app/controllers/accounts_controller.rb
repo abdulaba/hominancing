@@ -2,7 +2,6 @@ class AccountsController < ApplicationController
   before_action :set_account, only: %i[show edit update destroy]
   before_action :set_colors
   def index
-    @accounts = Account.all
     @accounts = policy_scope(Account)
   end
 
