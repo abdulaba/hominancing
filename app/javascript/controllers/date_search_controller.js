@@ -6,6 +6,7 @@ export default class extends Controller {
 
   setMin() {
     this.endDateTarget.setAttribute("min", this.startDateTarget.value)
+
   }
 
   setMax() {

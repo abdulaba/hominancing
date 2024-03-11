@@ -18,7 +18,7 @@ class RecordsController < ApplicationController
     if @record.save
       @record.account.balance += @record.income ? @record.amount : -@record.amount
       @record.account.save
-      redirect_to(records_path)
+      redirect_to records_path, notice: "¡Registro creado!"
     else
       render(:new, status: :unprocessable_entity)
     end
@@ -36,7 +36,7 @@ class RecordsController < ApplicationController
       end
       @record.account.balance += @record.income ? @record.amount - old_amount : -(@record.amount - old_amount)
       @record.account.save
-      redirect_to(records_path)
+      redirect_to records_path, notice: "¡Cambios hechos!"
     else
       render(:edit, status: :unprocessable_entity)
     end
@@ -61,6 +61,6 @@ class RecordsController < ApplicationController
   end
 
   def record_params
-    params.require("record").permit(:amount, :account_id, :category, :note, :plan, :type, :income)
+    params.require("record").permit(:amount, :account_id, :category, :note, :plan_id, :type, :income)
   end
 end

@@ -1,9 +1,28 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
-    <%= link_to "HOMINANCING", root_path, class: "navbar-brand" %>
+    <%= link_to "HOMINANCING", root_path, class: "navbar-brand nav-link" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- menu desplegable -->
+      <% if user_signed_in? %>
+      <div class="navbar-links d-flex justify-content-between">
+        <%= link_to "Cuentas", accounts_path, class:"text-decoration-none nav-link" %>
+        <%= link_to "Registros", records_path, class:"text-decoration-none nav-link" %>
+        <%= link_to "Gastos programados", fixeds_path, class:"text-decoration-none nav-link" %>
+        <%= link_to "Planes", plans_path, class:"text-decoration-none nav-link" %>
+        <div class="nav-link dropdown d-flex">
+          <p class="m-0 p-0 dropdown-toggle", id="navbarDropdown" data-bs-toggle="dropdown"><%= current_user.nickname %></p>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <%= link_to "Cerrar sesión", destroy_user_session_path, class:"dropdown-item", data: {turbo_method: :delete} %>
+          </div>
+        </div>
+      </div>
+      <% else %>
+        <div class="d-flex justify-content-between">
+          <%= link_to "Registrarme", new_user_registration_path, class:"text-decoration-none nav-link mx-3"%>
+          <%= link_to "Iniciar sesión", new_user_session_path, class:"text-decoration-none nav-link" %>
+        </div>
+      <% end %>
   </div>
 </div>
