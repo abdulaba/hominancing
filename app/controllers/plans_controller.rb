@@ -7,16 +7,17 @@ class PlansController < ApplicationController
     @plans = policy_scope(Plan)
   end
 
-  def show
-    authorize @plan
-    @progress_percentage = calculate_progress_percentage(@plan)
-    @balance_records = @plan.records.limit(10).order(created_at: :desc)
-    @status = @plan.completed? ? 'Completado' : 'En progreso'    @plan = @plan.reload
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
+def show
+  authorize @plan
+  @balance_records = @plan.records.limit(10).order(created_at: :desc)
+  @progress_percentage = calculate_progress_percentage(@plan) || 0
+  @plan.reload
+
+  respond_to do |format|
+    format.html
+    format.turbo_stream
   end
+end
 
   def new
     @plan = Plan.new
@@ -42,21 +43,24 @@ class PlansController < ApplicationController
   def update
     authorize @plan
     if @plan.update(plan_params)
-      @plan.update_balance
+      total_income = @plan.records.where(income: true).sum(:amount)
+      total_expense = @plan.records.where(income: false).sum(:amount)
+
+      @plan.balance = total_income - total_expense
+      @plan.status = (@plan.balance >= @plan.goal)
+      @plan.save!
+
       redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
+
   def destroy
     authorize @plan
     @plan.destroy
     redirect_to plans_path
-  end
-
-  def completed?
-    balance >= goal
   end
 
   private
@@ -81,9 +85,16 @@ class PlansController < ApplicationController
 
     plan.balance = total_income - total_expense
     plan.status = (plan.balance >= plan.goal)
+    plan.save
 
-    return 0 if plan.goal.zero?
-
-    ((plan.balance) / plan.goal) * 100
+    if plan.goal.zero?
+      return 0
+    elsif plan.status
+      return 100
+    else
+      return (plan.balance.to_f / plan.goal) * 100
+    end
   end
+
+
 end
