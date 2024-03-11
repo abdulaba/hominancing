@@ -3,6 +3,7 @@ class RecordsController < ApplicationController
 
   def index
     @records = current_user.records.limit(10).order(created_at: :desc)
+    @record = Record.new
   end
 
   def show; end
