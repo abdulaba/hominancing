@@ -1,17 +1,15 @@
 class RecordsController < ApplicationController
-  before_action :set_record, only: %i[show edit update destroy]
+  before_action :set_record, only: %i[edit update destroy]
 
   def index
     @records = policy_scope(Record)
     @records = current_user.records.limit(10).order(created_at: :desc)
     @record = Record.new
-  end
 
-  def show; end
-
-  def new
-    @record = Record.new
-    authorize @record
+    respond_to do |format|
+      format.html # Follow regular flow of Rails
+      format.text { render partial: "test", locals: {records: @records}, formats: [:html] }
+    end
   end
 
   def create
