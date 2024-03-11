@@ -45,7 +45,7 @@ users.each do |user|
 
   puts "creando registros de la cuenta"
 
-  hour = (0..24).to_a.sample
+  hour = 0
 
   (DateTime.new(2024, 1, 1)..DateTime.now).to_a.each do |date|
     next if [true, false].sample
@@ -60,7 +60,8 @@ users.each do |user|
       if record.save
         record.account.balance += record.income ? record.amount : -record.amount
         record.account.save
-        hour = (0..24).to_a.sample
+        hour += 1
+        hour = 0 if hour > 24
       end
     end
   end
