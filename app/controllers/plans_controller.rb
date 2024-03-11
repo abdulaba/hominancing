@@ -5,13 +5,21 @@ class PlansController < ApplicationController
   def index
     @plan = Plan.new
     @plans = policy_scope(Plan)
+    @progress_percentages = @plans.map { |plan| calculate_progress_percentage(plan) }
+
   end
 
-  def show
-    authorize @plan
-    @progress_percentage = calculate_progress_percentage(@plan)
-    @records = @plan.records
+def show
+  authorize @plan
+  @balance_records = @plan.records.limit(10).order(created_at: :desc)
+  @progress_percentage = calculate_progress_percentage(@plan) || 0
+  @plan.reload
+
+  respond_to do |format|
+    format.html
+    format.turbo_stream
   end
+end
 
   def new
     @plan = Plan.new
@@ -37,11 +45,19 @@ class PlansController < ApplicationController
   def update
     authorize @plan
     if @plan.update(plan_params)
+      total_income = @plan.records.where(income: true).sum(:amount)
+      total_expense = @plan.records.where(income: false).sum(:amount)
+
+      @plan.balance = total_income - total_expense
+      @plan.status = (@plan.balance >= @plan.goal)
+      @plan.save!
+
       redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
     end
   end
+
 
   def destroy
     authorize @plan
@@ -62,16 +78,23 @@ class PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:title, :goal, :color, :date)
+    params.require(:plan).permit(:goal, :title, :user_id, :color, :date, :status, :balance)
   end
 
   def calculate_progress_percentage(plan)
     total_income = plan.records.where(income: true).sum(:amount)
     total_expense = plan.records.where(income: false).sum(:amount)
 
-    return 0 if plan.goal.zero? # Para evitar división por cero
+    plan.balance = total_income - total_expense
+    plan.status = (plan.balance >= plan.goal)
+    plan.save
 
-    ((total_income - total_expense) / plan.goal) * 100
+    if plan.goal.zero?
+      return 0
+    elsif plan.status
+      return 100
+    else
+      return ((plan.balance.to_f / plan.goal) * 100).round(2)
+    end
   end
-
 end
