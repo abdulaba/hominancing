@@ -45,19 +45,23 @@ users.each do |user|
 
   puts "creando registros de la cuenta"
 
+  hour = 0
+
   (DateTime.new(2024, 1, 1)..DateTime.now).to_a.each do |date|
-    if [true, false].sample
-      (0..5).to_a.sample.times do
-        record = Record.new(category: 0, note: "ejemplo")
-        record.amount = (100..500).to_a.sample
-        record.income = Random.rand(2) == 1
-        record.account = user.accounts.sample
+    next if [true, false].sample
+    (0..5).to_a.sample.times do
+      record = Record.new(category: 0, note: "ejemplo")
+      record.amount = (100..500).to_a.sample
+      record.income = Random.rand(2) == 1
+      record.account = user.accounts.sample
+      record.result = record.account.balance + (record.income ? record.amount : -record.amount)
+      record.category = CATEGORIES.sample
+      record.created_at = DateTime.new(date.year, date.month, date.day, hour)
+      if record.save
         record.account.balance += record.income ? record.amount : -record.amount
-        record.result = record.account.balance
-        record.category = CATEGORIES.sample
-        record.created_at = date
         record.account.save
-        record.save
+        hour += 1
+        hour = 0 if hour > 24
       end
     end
   end
