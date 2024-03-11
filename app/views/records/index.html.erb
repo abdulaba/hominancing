@@ -6,7 +6,7 @@
       </button>
       <%= render "new-record-modal", record: @record %>
     </div>
-    <div class="col-9" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.id %>">
+    <div class="col-9" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.created_at.month - 1 %>">
       <div class="record-container" data-render-more-target = "recordContainer">
         <% @records.each do |record| %>
           <%= render "record", record: record %>

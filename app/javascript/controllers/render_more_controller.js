@@ -15,7 +15,7 @@ export default class extends Controller {
       .then((res) => {
         this.recordContainerTarget.innerHTML += "<hr>";
         this.recordContainerTarget.innerHTML += res;
-        this.nextPageValue = this.recordContainerTarget.children[this.recordContainerTarget.children.length - 1].dataset.renderMoreRecordIndexValue;
+        this.nextPageValue -= 1;
       });
   }
 }

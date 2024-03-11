@@ -3,10 +3,10 @@ class RecordsController < ApplicationController
 
   def index
     if params[:query].present?
-      @records = current_user.records.where("records.id < ?", params[:query]).limit(10).order(created_at: :desc)
+      @records = current_user.records.where("EXTRACT(MONTH FROM records.created_at) = ?", params[:query]).order(created_at: :desc)
     else
       @records = policy_scope(Record)
-      @records = current_user.records.limit(10).order(created_at: :desc)
+      @records = current_user.records.where("EXTRACT(MONTH FROM records.created_at) = ?", DateTime.now.month).order(created_at: :desc)
     end
     @record = Record.new
 
