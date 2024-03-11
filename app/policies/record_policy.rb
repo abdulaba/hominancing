@@ -6,8 +6,23 @@ class RecordPolicy < ApplicationPolicy
     end
   end
 
-  def update?
+  def new?
+    true
   end
 
+  def create?
+    true
+  end
 
+  def edit?
+    record.account.user = user
+  end
+
+  def update?
+    record.account.user = user
+  end
+
+  def destroy?
+    record.account.user = user
+  end
 end
