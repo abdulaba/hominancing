@@ -2,6 +2,7 @@ class RecordsController < ApplicationController
   before_action :set_record, only: %i[show edit update destroy]
 
   def index
+    @records = policy_scope(Record)
     @records = current_user.records.limit(10).order(created_at: :desc)
   end
 
@@ -9,10 +10,12 @@ class RecordsController < ApplicationController
 
   def new
     @record = Record.new
+    authorize @record
   end
 
   def create
     @record = Record.new(record_params)
+    authorize @record
     @record.result = @record.income ? @record.amount + @record.account.balance : @record.account.balance - @record.amount if @record.account.balance
     if @record.save
       @record.account.balance += @record.income ? @record.amount : -@record.amount
@@ -23,9 +26,12 @@ class RecordsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @record
+  end
 
   def update
+    authorize @record
     @records = current_user.records.where(created_at: (Time.now - 5.minute)..(Time.now)).order(created_at: :desc)
     old_amount = @record.amount
     if @record.update(record_params)
@@ -42,6 +48,7 @@ class RecordsController < ApplicationController
   end
 
   def destroy
+    authorize @record
     @records = current_user.records.where(created_at: (Time.now - 5.minute)..(Time.now)).order(created_at: :desc)
     @records.each do |record|
       record.result -= @record.income ? @record.amount : -@record.amount
