@@ -79,3 +79,6 @@ gem "devise"
 
 # gema para las graficas
 gem "chartkick"
+
+# autorization
+gem "pundit"
