@@ -2,13 +2,17 @@ class RecordsController < ApplicationController
   before_action :set_record, only: %i[edit update destroy]
 
   def index
-    @records = policy_scope(Record)
-    @records = current_user.records.limit(10).order(created_at: :desc)
+    if params[:query].present?
+      @records = current_user.records.where("records.id < ?", params[:query]).limit(10).order(created_at: :desc)
+    else
+      @records = policy_scope(Record)
+      @records = current_user.records.limit(10).order(created_at: :desc)
+    end
     @record = Record.new
 
     respond_to do |format|
       format.html # Follow regular flow of Rails
-      format.text { render partial: "test", locals: {records: @records}, formats: [:html] }
+      format.text { render partial: "records", locals: { records: @records }, formats: [:html] }
     end
   end
 

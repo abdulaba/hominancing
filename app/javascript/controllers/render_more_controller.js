@@ -6,12 +6,16 @@ export default class extends Controller {
     nextPage: Number
   }
 
-  connect() {
-    console.log(this.nextPageValue);
-  }
+  static targets = ["recordContainer"]
 
   update() {
     const url = `./records?query=${this.nextPageValue}`;
-    fetch(url).then(res => res.json()).then(res => console.log(res))
+    fetch(url, { headers: { 'Accept': 'text/plain' } })
+      .then(res => res.text())
+      .then((res) => {
+        this.recordContainerTarget.innerHTML += "<hr>";
+        this.recordContainerTarget.innerHTML += res;
+        this.nextPageValue = this.recordContainerTarget.children[this.recordContainerTarget.children.length - 1].dataset.renderMoreRecordIndexValue;
+      });
   }
 }
