@@ -1,0 +1,6 @@
+<% @records.each do |record| %>
+<div data-render-more-record-index-value = <%= record.id %>>
+    <%= render "record", record: record %>
+    <%= render "record-modal", record: record %>
+</div>
+<% end %>
