@@ -1,4 +1,7 @@
-<h2>Sign up</h2>
+<div style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<%= image_path 'homi-1.jpg' %>'); height: 85vh; background-repeat: no-repeat; background-size: cover; background-position: center;">
+  <div class="container d-flex justify-content-center pt-5">
+    <div class="form-difuse w-50">
+      <h2>Iniciar sesión</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
@@ -23,3 +26,6 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+     </div>
+  </div>
+</div>

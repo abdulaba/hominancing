@@ -1,12 +1,12 @@
 <%= simple_form_for(@plan) do |f| %>
-  <%= f.input :title %>
-  <%= f.input :goal %>
+  <%= f.input :title, label: "Título", required: true %>
+  <%= f.input :goal, label: "Meta" %>
   <%= f.input :color, as: :color, input_html: { list: "options" } %>
   <datalist id="options">
     <% @colors.each do |color| %>
       <option value="<%= color %>"><%= color %></option>
     <% end %>
   </datalist>
-  <%= f.input :date, as: :date %>
+  <%= f.input :date, label: "Fecha", as: :date %>
   <%= f.submit class: "btn btn-primary w-100" %>
 <% end %>
