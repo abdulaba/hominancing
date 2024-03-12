@@ -44,6 +44,13 @@ class FixedsController < ApplicationController
   end
 
   def destroy
+    if @fixed.records.count > 0
+      @fixed.records.each do |record|
+        record.fixed = nil
+        record.save
+      end
+    end
+
     @fixed.destroy
     redirect_to fixeds_path
   end
