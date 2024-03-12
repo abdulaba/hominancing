@@ -5,10 +5,14 @@ export default class extends Controller {
   static values = {
     nextPage: Number,
     year: Number,
-    months: String
+    open: Boolean
   }
 
-  static targets = ["recordContainer", "showMore"]
+  static targets = ["recordContainer", "showMore", "openModal"]
+
+  connect() {
+    if (this.openValue) this.openModalTarget.click();
+  }
 
   update() {
     const months = {

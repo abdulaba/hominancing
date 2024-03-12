@@ -15,7 +15,7 @@
       <%= render "new-record-modal", record: @record %>
     <% else %>
       <div class="col-3 justify-content-center d-flex">
-        <button data-bs-toggle="modal" data-bs-target="#new-record-modal" class="btn btn-success fw-bold w-100">
+        <button data-bs-toggle="modal" data-bs-target="#new-record-modal" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>"class="btn btn-success fw-bold w-100">
           Agregar registro
         </button>
         <%= render "new-record-modal", record: @record %>

@@ -19,6 +19,7 @@ class RecordsController < ApplicationController
     @show_more = current_user.records.where(sql_query, month, year).empty?
     @date = @records.first.created_at unless @records.empty?
     @record = Record.new
+    @form_err = false
 
     respond_to do |format|
       format.html # Follow regular flow of Rails
@@ -29,13 +30,24 @@ class RecordsController < ApplicationController
   def create
     @record = Record.new(record_params)
     authorize @record
-    @record.result = @record.income ? @record.amount + @record.account.balance : @record.account.balance - @record.amount if @record.account.balance
+    @record.result = 0
     if @record.save
+      @form_err = false
+      @record.result = @record.income ? @record.amount + @record.account.balance : @record.account.balance - @record.amount if @record.account.balance
       @record.account.balance += @record.income ? @record.amount : -@record.amount
       @record.account.save
       redirect_to records_path, notice: "¡Registro creado!"
     else
-      render(:new, status: :unprocessable_entity)
+      sql_query = "EXTRACT(MONTH FROM records.created_at) = ? AND EXTRACT(YEAR FROM records.created_at) = ?"
+      @records = current_user.records.where(sql_query, DateTime.now.month, DateTime.now.year).order(created_at: :desc)
+      unless @records.empty?
+        year = (@records.first.created_at.month.to_i - 1).zero? ? @records.first.created_at.year.to_i - 1 : @records.first.created_at.year.to_i
+        month = (@records.first.created_at.month.to_i - 1).zero? ? 12 : @records.first.created_at.month.to_i - 1
+      end
+      @show_more = current_user.records.where(sql_query, month, year).empty?
+      @date = @records.first.created_at unless @records.empty?
+      @form_err = true
+      render("records/index", status: :unprocessable_entity)
     end
   end
 
