@@ -31,7 +31,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_144342) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "income"
+    t.string "title"
+    t.datetime "start_date"
+    t.bigint "plan_id"
     t.index ["account_id"], name: "index_fixeds_on_account_id"
+    t.index ["plan_id"], name: "index_fixeds_on_plan_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -57,7 +62,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_144342) do
     t.float "result"
     t.boolean "income"
     t.bigint "plan_id"
+    t.bigint "fixed_id"
     t.index ["account_id"], name: "index_records_on_account_id"
+    t.index ["fixed_id"], name: "index_records_on_fixed_id"
     t.index ["plan_id"], name: "index_records_on_plan_id"
   end
 
@@ -76,7 +83,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_144342) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "fixeds", "accounts"
+  add_foreign_key "fixeds", "plans"
   add_foreign_key "plans", "users"
   add_foreign_key "records", "accounts"
+  add_foreign_key "records", "fixeds"
   add_foreign_key "records", "plans"
 end

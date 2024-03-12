@@ -1,0 +1,23 @@
+<%= link_to fixed_path(fixed), class: "text-decoration-none" do %>
+  <div class="card p-2 mb-3">
+    <div class = "d-flex align-items-center justify-content-between">
+      <div>
+        <%= fixed.title %>
+        <div>
+          <i class="fa-solid fa-coins"></i>
+          <span class="mx-3 account-pill" style="background-color: <%= fixed.account.color %>;"> <%= fixed.account.name %> </span>
+        </div>
+      </div>
+      <div>
+        <span class = "text-secondary"><%= fixed.periodicity_to_s %></span>
+      </div>
+      <div>
+        <span><%= fixed.amount %></span>
+        <i class="mx-3 fa-solid fa-arrow-trend-<%= fixed.income ? "up text-success" : "down text-danger" %>"></i>
+        <div>
+          <%= fixed.next_pay == DateTime.now.to_date ? "Hoy" : fixed.next_pay %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
