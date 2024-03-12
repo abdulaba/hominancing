@@ -52,7 +52,7 @@ class AccountsController < ApplicationController
   def destroy
     authorize @account
     @account.destroy
-    redirect_to accounts_path
+    redirect_to accounts_path, notice: "Cuenta Borrada"
   end
 
   private

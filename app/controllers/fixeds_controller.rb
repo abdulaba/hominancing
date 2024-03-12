@@ -26,7 +26,7 @@ class FixedsController < ApplicationController
   def create
     @fixed = Fixed.new(fixed_params)
     if @fixed.save
-      redirect_to fixed_path(@fixed), notice: "pago programado creado"
+      redirect_to fixed_path(@fixed), notice: "Pago programado creado"
     else
       render :new, status: :unprocessable_entity
     end
@@ -52,7 +52,7 @@ class FixedsController < ApplicationController
     end
 
     @fixed.destroy
-    redirect_to fixeds_path
+    redirect_to fixeds_path, notice: "Pago Borrado"
   end
 
   private

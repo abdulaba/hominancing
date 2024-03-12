@@ -4,9 +4,15 @@
       <div>
         <%= @fixed.title %>
         <i class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#editModal"></i>
-        <%= link_to fixed_path(@fixed), data: {turbo_method: :delete, turbo_confirm: "are you sure"}, class: "text-decoration-none text-dark" do %>
-          <i class="fa-solid fa-trash"></i>
-        <% end %>
+        <span data-controller = "destroy"
+        data-destroy-title-value = "¿Seguro que quieres eliminar este pago programado?"
+        data-destroy-message-value="No se eliminaran los registros creados por este pago programado">
+          <i class="fa-solid fa-trash"
+          data-action = "click->destroy#delete"
+          ></i>
+          <%= link_to fixed_path(@fixed), data: {turbo_method: :delete, destroy_target: "del"}, class: "d-none" do %>
+          <% end %>
+        </span>
         <div>
           <i class="fa-solid fa-coins"></i>
           <span class="mx-3 account-pill" style="background-color: <%= @fixed.account.color %>;"> <%= @fixed.account.name %> </span>
