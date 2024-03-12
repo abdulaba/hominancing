@@ -15,6 +15,15 @@ class AccountsController < ApplicationController
     @tendency = @records.group_by { |record| record[:created_at].to_date.to_s }
     @tendency = grahp_data(@tendency) { |value| value.first.result }
 
+    if @account.records.count == 0
+      init = @account.balance
+    else
+      record = @account.records.first
+      init = record.income ? record.result - record.amount : record.result + record.amount
+    end
+
+    @tendency = complete_values(@tendency, params[:start_date], params[:end_date], init) unless params[:start_date].blank? && params[:end_date].blank?
+
     @expence = @records.where(income: false).group_by { |record| record[:category] }
     @expence = grahp_data(@expence) { |value| value.map(&:amount).sum }
   end
@@ -56,6 +65,17 @@ class AccountsController < ApplicationController
   end
 
   private
+
+  def complete_values(data, start_date, end_date, initial_value)
+    value_default = initial_value
+    (start_date..end_date).to_a.each do |date|
+      value_default = data[date.to_s] if data[date.to_s]
+      unless data[date.to_s]
+        data[date.to_s] = value_default
+      end
+    end
+    data
+  end
 
   def grahp_data(data)
     hash = {}

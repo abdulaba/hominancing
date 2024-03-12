@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+      <% @accounts.each do |account| %>
+        <div class="col-2 my-3">
+          <%= render "accounts/account_card", account: account %>
+        </div>
+      <% end %>
+  </div>
+  <div class="row">
+    <div class="col h-100">
+      <%= line_chart @tendency, title: "Tendencia del saldo", colors: @colors, points: false %>
+    </div>
+  </div>
+</div>
