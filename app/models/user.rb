@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :accounts
   has_many :plans
   has_many :records, through: :accounts
+  has_many :fixeds, through: :accounts
 
   validates :nickname, uniqueness: true
 

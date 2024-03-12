@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-3">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fixedForm">
+        Nuevo pago Programado
+      </button>
+    </div>
+    <div class="col-8">
+      <% @fixeds.each do |fixed| %>
+        <%= render "fixed_card", fixed: fixed %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="fixedForm" tabindex="-1" aria-labelledby="fixedFormLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Nuevo pago programado</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "fixed_form", fixed: Fixed.new %>
+      </div>
+    </div>
+  </div>
+</div>
