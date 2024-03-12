@@ -4,3 +4,6 @@
     <%= render "record-modal", record: record %>
 </div>
 <% end %>
+<% unless @show_more %>
+  <p data-action="click->render-more#update" data-render-more-target = "showMore">Ver más...</p>
+<% end %>
