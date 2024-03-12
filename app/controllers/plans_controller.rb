@@ -68,7 +68,7 @@ end
       end
     end
     @plan.destroy
-    redirect_to plans_path
+    redirect_to plans_path, notice: "Plan Borrado"
   end
 
   private
