@@ -36,4 +36,12 @@ class Fixed < ApplicationRecord
       return "Semanal"
     end
   end
+
+  def pay?
+    if self.records.count < 1
+      return false
+    else
+      return self.records.last.created_at.to_date == DateTime.now.to_date
+    end
+  end
 end

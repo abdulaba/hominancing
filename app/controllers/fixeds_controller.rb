@@ -16,7 +16,7 @@ class FixedsController < ApplicationController
       note: @fixed.title,
       plan: @fixed.plan,
       income: @fixed.income
-    ) unless pay?(@records)
+    ) unless @fixed.pay?
   end
 
   def new
@@ -49,13 +49,6 @@ class FixedsController < ApplicationController
   end
 
   private
-  def pay?(records)
-    if records.count < 1
-      return false
-    else
-      return @fixed.records.last.created_at.to_date == DateTime.now.to_date
-    end
-  end
 
   def set_fixed
     @fixed = Fixed.find(params[:id])
