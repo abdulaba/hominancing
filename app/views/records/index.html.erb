@@ -1,19 +1,42 @@
 <div class="container">
   <div class="row mt-3 align-items-start">
-    <div class="col-3 justify-content-center d-flex">
-      <button data-bs-toggle="modal" data-bs-target="#new-record-modal" class="btn btn-success fw-bold w-100">
-        Agregar registro
-      </button>
-      <%= render "new-record-modal", record: @record %>
-    </div>
-    <div class="col-9" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.created_at.month - 1 %>">
-      <div class="record-container" data-render-more-target = "recordContainer">
-        <% @records.each do |record| %>
-          <%= render "record", record: record %>
-          <%= render "record-modal", record: record %>
-        <% end %>
+    <% if current_user.accounts.empty? %>
+      <div class="w-50 m-auto position-absolute top-50 start-50 translate-middle">
+        <h4 class="text-center text-secondary"> Parece que aún no tienes ninguna cuenta creada, ¿por qué no empiezas creando una? </h4>
+        <%= link_to "Crea tu primera cuenta", new_account_path, class: "btn btn-primary w-100" %>
       </div>
-      <p data-action="click->render-more#update">Ver más...</p>
-    </div>
+    <% elsif current_user.records.empty? %>
+      <div class="w-50 m-auto position-absolute top-50 start-50 translate-middle">
+        <h4 class="text-center text-secondary"> Parece que aún no tienes ningún registro, prueba a agregar uno </h4>
+        <button data-bs-toggle="modal" data-bs-target="#new-record-modal" class="btn btn-primary fw-bold w-100">
+          Agrega tu primer registro
+        </button>
+      </div>
+      <%= render "new-record-modal", record: @record %>
+    <% else %>
+      <div class="col-3 justify-content-center d-flex">
+        <button data-bs-toggle="modal" data-bs-target="#new-record-modal" class="btn btn-success fw-bold w-100">
+          Agregar registro
+        </button>
+        <%= render "new-record-modal", record: @record %>
+      </div>
+    <% end %>
+    <% unless @records.empty? %>
+      <div class="col-9" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.created_at.month - 1 %>"  data-render-more-year-value = "<%= @records.last.created_at.year %>">
+        <div class="record-container" data-render-more-target = "recordContainer">
+          <div>
+            <% @records.each do |record| %>
+              <div>
+                <%= render "record", record: record %>
+                <%= render "record-modal", record: record %>
+              </div>
+            <% end %>
+          </div>
+          <% unless @show_more %>
+            <p data-action="click->render-more#update" data-render-more-target = "showMore">Ver más...</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

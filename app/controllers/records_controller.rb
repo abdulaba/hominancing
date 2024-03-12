@@ -2,17 +2,27 @@ class RecordsController < ApplicationController
   before_action :set_record, only: %i[edit update destroy]
 
   def index
-    if params[:query].present?
-      @records = current_user.records.where("EXTRACT(MONTH FROM records.created_at) = ?", params[:query]).order(created_at: :desc)
+    sql_query = "EXTRACT(MONTH FROM records.created_at) = ? AND EXTRACT(YEAR FROM records.created_at) = ?"
+    if params[:month].present? && params[:year].present?
+      @records = current_user.records.where(sql_query, params[:month], params[:year]).order(created_at: :desc)
+      year = (params[:month].to_i - 1).zero? ? params[:year].to_i - 1 : params[:year]
+      month = (params[:month].to_i - 1).zero? ? 12 : params[:month].to_i - 1
     else
       @records = policy_scope(Record)
-      @records = current_user.records.where("EXTRACT(MONTH FROM records.created_at) = ?", DateTime.now.month).order(created_at: :desc)
+      @records = current_user.records.where(sql_query, DateTime.now.month, DateTime.now.year).order(created_at: :desc)
+      unless @records.empty?
+        year = (@records.first.created_at.month.to_i - 1).zero? ? @records.first.created_at.year.to_i - 1 : @records.first.created_at.year.to_i
+        month = (@records.first.created_at.month.to_i - 1).zero? ? 12 : @records.first.created_at.month.to_i - 1
+      end
     end
+
+    @show_more = current_user.records.where(sql_query, month, year).empty?
+    @date = @records.first.created_at unless @records.empty?
     @record = Record.new
 
     respond_to do |format|
       format.html # Follow regular flow of Rails
-      format.text { render partial: "records", locals: { records: @records }, formats: [:html] }
+      format.text { render partial: "records", locals: { records: @records, show_more: @show_more }, formats: [:html] }
     end
   end
 
