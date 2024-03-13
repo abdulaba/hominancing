@@ -5,8 +5,8 @@
       <%= render 'form', plan: @plan, colors: @colors %>
     </div>
     <div class="col-8">
-      <% @plans.each_with_index do |plan, index| %>
-        <%= render "plan_card", plan: plan, progress_percentage: @progress_percentages[index] %>
+      <% @plans.each_with_index do |plan| %>
+        <%= render "plan_card", plan: plan %>
       <% end %>
     </div>
   </div>
