@@ -7,6 +7,8 @@ class AccountsController < ApplicationController
 
   def show
     authorize @account
+    @form_err = false
+    @record = @account.records.new
     @records = @account.records.order(created_at: :desc)
     @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
     @records = @records.where("created_at <= ?", DateTime.parse(params[:end_date]) + 23.hour) unless params[:end_date].blank?
