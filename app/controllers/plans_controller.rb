@@ -61,8 +61,14 @@ end
 
   def destroy
     authorize @plan
+    if @plan.records.count > 0
+      @plan.records.each do |record|
+        record.plan = nil
+        record.save
+      end
+    end
     @plan.destroy
-    redirect_to plans_path
+    redirect_to plans_path, notice: "Plan Borrado"
   end
 
   private

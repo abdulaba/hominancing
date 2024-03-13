@@ -74,7 +74,7 @@ class RecordsController < ApplicationController
     @record.account.balance -= @record.income ? @record.amount : -@record.amount
     @record.account.save
     @record.destroy
-    redirect_to records_path
+    redirect_to records_path, notice: "Registro borrado"
   end
 
   private

@@ -6,6 +6,7 @@ class FixedsController < ApplicationController
   end
 
   def show
+    authorize @fixed
     @records = @fixed.records
 
     @record = Record.new(
@@ -21,21 +22,25 @@ class FixedsController < ApplicationController
 
   def new
     @fixed = Fixed.new
+    authorize @fixed
   end
 
   def create
     @fixed = Fixed.new(fixed_params)
+    authorize @fixed
     if @fixed.save
-      redirect_to fixed_path(@fixed), notice: "pago programado creado"
+      redirect_to fixed_path(@fixed), notice: "Pago programado creado"
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
+    authorize @fixed
   end
 
   def update
+    authorize @fixed
     if @fixed.update(fixed_params)
       redirect_to fixed_path(@fixed), notice: "Cambios hechos"
     else
@@ -44,8 +49,16 @@ class FixedsController < ApplicationController
   end
 
   def destroy
+    authorize @fixed
+    if @fixed.records.count > 0
+      @fixed.records.each do |record|
+        record.fixed = nil
+        record.save
+      end
+    end
+
     @fixed.destroy
-    redirect_to fixeds_path
+    redirect_to fixeds_path, notice: "Pago Borrado"
   end
 
   private

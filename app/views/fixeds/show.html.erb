@@ -1,8 +1,18 @@
 <div class="container">
-  <div class="card p-2 my-3">
+  <div class="shadow-sm p-2 my-3">
     <div class = "d-flex align-items-center justify-content-between">
       <div>
         <%= @fixed.title %>
+        <i class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#editModal"></i>
+        <span data-controller = "destroy"
+        data-destroy-title-value = "¿Seguro que quieres eliminar este pago programado?"
+        data-destroy-message-value="No se eliminaran los registros creados por este pago programado">
+          <i class="fa-solid fa-trash"
+          data-action = "click->destroy#delete"
+          ></i>
+          <%= link_to fixed_path(@fixed), data: {turbo_method: :delete, destroy_target: "del"}, class: "d-none" do %>
+          <% end %>
+        </span>
         <div>
           <i class="fa-solid fa-coins"></i>
           <span class="mx-3 account-pill" style="background-color: <%= @fixed.account.color %>;"> <%= @fixed.account.name %> </span>
@@ -49,4 +59,18 @@
   <% @records.each do |record| %>
     <%= render "records/record", record: record %>
   <% end %>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>plan programado</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "fixed_form", fixed: @fixed %>
+      </div>
+    </div>
+  </div>
 </div>
