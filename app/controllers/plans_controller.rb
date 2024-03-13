@@ -6,7 +6,6 @@ class PlansController < ApplicationController
     @plan = Plan.new
     @plans = policy_scope(Plan)
     @progress_percentages = @plans.map { |plan| calculate_progress_percentage(plan) }
-
   end
 
 def show

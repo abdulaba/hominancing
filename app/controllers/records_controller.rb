@@ -38,6 +38,13 @@ class RecordsController < ApplicationController
         authorize @account
         set_graphs
         render("accounts/show", status: :unprocessable_entity)
+      elsif last_controller == "plans"
+        @plan = @record.plan
+        authorize @plan
+        @balance_records = @plan.records.limit(10).order(created_at: :desc)
+        @progress_percentage = calculate_progress_percentage(@plan) || 0
+        @plan.reload
+        render("plans/show", status: :unprocessable_entity)
       end
 
     end
@@ -133,5 +140,22 @@ class RecordsController < ApplicationController
 
     @expence = @records.where(income: false).group_by { |record| record[:category] }
     @expence = grahp_data(@expence) { |value| value.map(&:amount).sum }
+  end
+
+  def calculate_progress_percentage(plan)
+    total_income = plan.records.where(income: true).sum(:amount)
+    total_expense = plan.records.where(income: false).sum(:amount)
+
+    plan.balance = total_income - total_expense
+    plan.status = (plan.balance >= plan.goal)
+    plan.save
+
+    if plan.goal.zero?
+      return 0
+    elsif plan.status
+      return 100
+    else
+      return ((plan.balance.to_f / plan.goal) * 100).round(2)
+    end
   end
 end
