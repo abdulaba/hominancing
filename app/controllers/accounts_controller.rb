@@ -30,7 +30,7 @@ class AccountsController < ApplicationController
     if @account.records.count == 0
       init = @account.balance
     else
-      record = @account.records.first
+      record = @records.first
       init = record.income ? record.result - record.amount : record.result + record.amount
     end
 
