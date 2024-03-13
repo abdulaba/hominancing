@@ -1,53 +1,72 @@
 <div class="container">
   <div class="row">
-    <%= link_to plan_path(@plan), class: "text-decoration-none text-white" do %>
-      <div class="card plan-card my-5" style="background-color: <%= @plan.color %>;">
-        <div class="card-body d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            <i class="fas fa-piggy-bank fs-1 me-3"></i>
-            <div class="d-flex flex-column">
-              <div>
-                <div><%= @plan.title %></div>
-                <div><%= @plan.goal %></div>
+    <div class="col-md-12 mb-3">
+      <% if @plan.status != 'culminado' %>
+        <%= link_to plan_path(@plan), class: "text-decoration-none text-white" do %>
+          <div class="card plan-card my-5" style="background-color: <%= @plan.color %>;">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-piggy-bank fs-1 me-3"></i>
+                <div class="d-flex flex-column">
+                  <div>
+                    <div><%= @plan.title %></div>
+                    <div><%= @plan.goal %></div>
+                    <% if @plan.status == 'culminado' %>
+                      <div>Estado: Culminado</div>
+                    <% elsif @plan.balance == @plan.goal %>
+                      <div>Estado: Culminado</div>
+                    <% else %>
+                      <div>Estado: En progreso</div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="ml-auto text-right">
+                <div class="mt-2">
+                  <small>Fecha de meta: <%= @plan.date.strftime('%Y-%m-%d') %></small>
+                  <div>
+                    <%= link_to "#", class: "text-decoration-none text-white", "data-bs-toggle": "modal", "data-bs-target": "#editShowModal" do %>
+                      <i class="fa-solid fa-pen"></i>
+                    <% end %>
+                    <%= link_to plan_path(@plan), data: {turbo_method: :delete, turbo_confirm: "are you sure"}, class: "text-decoration-none text-white" do %>
+                      <i class="fa-solid fa-trash"></i>
+                    <% end %>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="ml-auto text-right">
-            <div class="mt-2">
-              <small>Fecha de meta: <%= @plan.date.strftime('%Y-%m-%d') %></small>
-              <div>
-                <%= link_to "#", class: "text-decoration-none text-white", "data-bs-toggle": "modal", "data-bs-target": "#editShowModal" do %>
-                  <i class="fa-solid fa-pen"></i>
-                <% end %>
-                <span data-controller = "destroy"
-                  data-destroy-title-value = "¿Seguro que quieres eliminar este plan?"
-                  data-destroy-message-value="No se eliminaran los registros asociados a este plan">
-                  <i class="fa-solid fa-trash"
-                  data-action = "click->destroy#delete">
-                  </i>
-                  <%= link_to plan_path(@plan), data: {turbo_method: :delete, destroy_target: "del"}, class: "text-decoration-none text-white" do %>
-                  <% end %>
-                </span>
-              </div>
+          <div class="plan-card progress mb-2" style="width: calc(100% - 30px); height: 10px; margin-left: 15px;">
+              <div class="progress-bar rounded progress-bar-striped bg-success" role="progressbar"
+                   style="width: <%= @progress_percentage %>%;"
+                   aria-valuenow="<%= @progress_percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-          </div>
-        </div>
-        <div class="plan-card progress mt-2 mb-2" style="width: 100%; height: 10px;">
-          <div class="progress-bar rounded progress-bar-striped" role="progressbar"
-               style="width: <%= @progress_percentage %>%;"
-               aria-valuenow="<%= @progress_percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
 
-    <div class="card-footer d-flex justify-content-between">
-      <div>Balance: <%= number_to_currency(@plan.balance) %></div>
-        <% if @progress_percentage.present? %>
-        <div>Avance del progreso: <%= @progress_percentage %> %</div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+              <div class="d-flex justify-content-between" style="margin-left: 15px; margin-right: 15px;">
+              <div>Balance: <%= number_to_currency(@plan.balance) %></div>
+              <% if @progress_percentage.present? %>
+                <div>Avance del progreso: <%= @progress_percentage %> %</div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>El plan está culminado. No se pueden agregar más registros de ingresos.</p>
+      <% end %>
+    </div>
   </div>
+
+  <h2>Registros</h2>
+  <% @plan.records.each do |record| %>
+    <%= render "records/record", record: record %>
+    <%= render "records/record-modal", record: record %>
+  <% end %>
+
+  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#newRecordModal">
+    +
+  </button>
 </div>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="editShowModal" tabindex="-1" aria-labelledby="editShowModalLabel" aria-hidden="true">
@@ -62,6 +81,28 @@
           <%= render "edit_plan", plan: @plan, colors: @colors %>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Record Modal -->
+<div class="modal fade" id="newRecordModal" tabindex="-1" aria-labelledby="newRecordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Nuevo registro</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for Record.new do |f| %>
+          <%= f.hidden_field :plan_id, value: @plan.id %>
+          <%= f.association :account, collection: current_user.accounts %>
+          <%= f.input :amount %>
+          <%= f.input :income, as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
+          <%= f.input :note %>
+          <%= f.input :category %>
+          <%= f.submit %>
+        <% end %>      </div>
     </div>
   </div>
 </div>
