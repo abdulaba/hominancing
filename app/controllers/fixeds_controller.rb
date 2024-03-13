@@ -2,7 +2,9 @@ class FixedsController < ApplicationController
   before_action :set_fixed, only: %i[show edit update destroy]
 
   def index
+    @fixed = Fixed.new
     @fixeds = current_user.fixeds.sort_by { |fix| fix.next_pay }
+    @form_err = false
   end
 
   def show
@@ -31,7 +33,8 @@ class FixedsController < ApplicationController
     if @fixed.save
       redirect_to fixed_path(@fixed), notice: "Pago programado creado"
     else
-      render :new, status: :unprocessable_entity
+      @fixeds = current_user.fixeds.sort_by { |fix| fix.next_pay }
+      render "fixeds/index", status: :unprocessable_entity
     end
   end
 
