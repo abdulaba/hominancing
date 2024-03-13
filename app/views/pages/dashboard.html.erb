@@ -6,6 +6,19 @@
         </div>
       <% end %>
   </div>
+  <%= form_with url: dashboard_path, method: :get, class: "row", data: {controller: "date-search"} do |f| %>
+        <div class="col">
+          <%= date_field_tag :start_date, params[:start_date],
+          data: {date_search_target: "startDate", action: "change->date-search#setMin"},
+          class:"form-control" %>
+        </div>
+        <div class="col">
+          <%= date_field_tag :end_date, params[:end_date],
+          data: {date_search_target: "endDate", action: "change->date-search#setMax"},
+          class:"form-control"  %>
+        </div>
+        <%= submit_tag "filtrar", class: "col btn btn-outline-primary" %>
+      <% end %>
   <div class="row">
     <div class="col-6 mb-5">
       <%= line_chart @tendency, title: "Tendencia del saldo", colors: @colors, points: false %>

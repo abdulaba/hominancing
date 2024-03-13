@@ -44,7 +44,7 @@ class PagesController < ApplicationController
         record = records.first
         init = record.income ? record.result - record.amount : record.result + record.amount
       end
-      group = complete_values(group, start_date, end_date, init)
+      group = complete_values(group, start_date.to_date, end_date.to_date, init)
       result[:tendency] << {name: account.name, data: group}
       result[:colors] << account.color
     end
