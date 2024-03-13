@@ -61,7 +61,7 @@
     <%= render "records/record-modal", record: record %>
   <% end %>
 
-  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#newRecordModal">
+  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#newRecordModal" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>">
     +
   </button>
 </div>
@@ -78,7 +78,7 @@
       </div>
       <div class="modal-body">
         <div class="container">
-          <%= render "edit_plan", plan: @plan, colors: @colors %>
+          <%= render "plans/edit_plan", plan: @plan, colors: @colors %>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= simple_form_for Record.new do |f| %>
+        <%= simple_form_for @record do |f| %>
           <%= f.hidden_field :plan_id, value: @plan.id %>
           <%= f.association :account, collection: current_user.accounts %>
           <%= f.input :amount %>

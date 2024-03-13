@@ -9,6 +9,8 @@ class PlansController < ApplicationController
 
 def show
   authorize @plan
+  @record = @plan.records.new
+  @form_err = false
   @balance_records = @plan.records.limit(10).order(created_at: :desc)
   @plan.reload
 

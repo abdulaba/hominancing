@@ -1,17 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="render-more"
+// Connects to data-controller="records"
 export default class extends Controller {
   static values = {
-    nextPage: Number,
+    month: Number,
     year: Number,
     open: Boolean
   }
 
-  static targets = ["recordContainer", "showMore", "openModal"]
+  static targets = ["recordContainer", "showMore"]
 
   connect() {
-    if (this.openValue) this.openModalTarget.click();
   }
 
   update() {
@@ -47,5 +46,10 @@ export default class extends Controller {
           this.nextPageValue -= 1;
         }
       });
-  }
+    }
+
+    openModal() {
+      const myModal = new bootstrap.Modal('#new-record-modal')
+      myModal.show()
+    }
 }

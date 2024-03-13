@@ -3,10 +3,14 @@ class AccountsController < ApplicationController
   before_action :set_colors
   def index
     @accounts = policy_scope(Account)
+    @account = Account.new
+    @form_err = false
   end
 
   def show
     authorize @account
+    @form_err = false
+    @record = @account.records.new
     @records = @account.records.order(created_at: :desc)
 
     today = DateTime.now
@@ -49,7 +53,9 @@ class AccountsController < ApplicationController
     if @account.save
       redirect_to account_path(@account), notice: "Cuenta creada!"
     else
-      render :new, status: :unprocessable_entity
+      @form_err = true
+      @accounts = policy_scope(Account)
+      render "accounts/index", status: :unprocessable_entity
     end
   end
 
