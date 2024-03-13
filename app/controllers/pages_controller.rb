@@ -23,6 +23,10 @@ class PagesController < ApplicationController
     @fixeds = @fixeds.reject {|fix| fix.next_pay <= start_date}
     @fixeds = @fixeds.reject {|fix| fix.next_pay >= end_date}
 
+    @plans = current_user.plans.sort_by {|plan| plan.date}
+    @plans = @plans.reject {|plan| plan.date <= start_date}
+    @plans = @plans.reject {|plan| plan.date >= end_date}
+
   end
 
   private

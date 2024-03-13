@@ -28,9 +28,19 @@
     </div>
     <div class="col-6 mb-5">
       <h5 class="text-center title">Proximos Pagos Programados</h5>
-      <% @fixeds.each do |fixed| %>
-        <%= render "fixeds/fixed_card", fixed: fixed %>
-      <% end %>
+      <div class="cards-list">
+        <% @fixeds.each do |fixed| %>
+          <%= render "fixeds/fixed_card", fixed: fixed %>
+        <% end %>
+      </div>
+    </div>
+    <div class = "col-6 mb-5">
+      <h5 class="text-center title">Proximos Planes</h5>
+      <div class="cards-list">
+        <% @plans.each do |plan| %>
+          <%= render "plans/plan_card", plan: plan %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
