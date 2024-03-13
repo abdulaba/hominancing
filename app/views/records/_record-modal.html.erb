@@ -15,7 +15,11 @@
           <div class="modal-footer">
             <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
             <% if Time.now - record.created_at < 300 %>
-              <%= link_to "Eliminar", record_path(record), class: "text-decoration-none btn btn-danger text-white", data: { turbo_method: :delete, turbo_confirm: "Are you sure?"}  %>
+              <span data-controller = "destroy" data-destroy-title-value = "¿Seguro que quieres eliminar este registro?">
+                <i class="fa-solid fa-trash text-primary"data-action = "click->destroy#delete"></i>
+                <%= link_to record_path(record), class: "d-none", data: { turbo_method: :delete, destroy_target: "del"}  do %>
+                <% end %>
+              </span>
             <% end %>
           </div>
       </div>
