@@ -1,12 +1,16 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
-    <%= link_to "HOMINANCING", root_path, class: "navbar-brand nav-link" %>
+    <%= link_to root_path, class: "navbar-brand nav-link" do %>
+      <%= image_tag('logo_1.png', alt: 'Hominancing Logo', class: 'logo', width: 42, height: 42) %>
+      HOMINANCING
+    <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- menu desplegable -->
       <% if user_signed_in? %>
-      <div class="navbar-links d-flex justify-content-between">
+      <div class="navbar-links d-flex justify-content-between w-50">
+        <%= link_to "Dashboard", dashboard_path, class:"text-decoration-none nav-link" %>
         <%= link_to "Cuentas", accounts_path, class:"text-decoration-none nav-link" %>
         <%= link_to "Registros", records_path, class:"text-decoration-none nav-link" %>
         <%= link_to "Gastos programados", fixeds_path, class:"text-decoration-none nav-link" %>
