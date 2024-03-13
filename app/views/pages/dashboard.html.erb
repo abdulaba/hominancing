@@ -7,8 +7,17 @@
       <% end %>
   </div>
   <div class="row">
-    <div class="col h-100">
+    <div class="col-6 mb-5">
       <%= line_chart @tendency, title: "Tendencia del saldo", colors: @colors, points: false %>
+    </div>
+    <div class="col-6 mb-5">
+      <%= pie_chart @expence, title: "Gastos por categoria" %>
+    </div>
+    <div class="col-6 mb-5">
+      <h5 class="text-center title">Proximos Pagos Programados</h5>
+      <% @fixeds.each do |fixed| %>
+        <%= render "fixeds/fixed_card", fixed: fixed %>
+      <% end %>
     </div>
   </div>
 </div>

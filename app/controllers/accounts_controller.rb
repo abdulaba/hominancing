@@ -8,8 +8,16 @@ class AccountsController < ApplicationController
   def show
     authorize @account
     @records = @account.records.order(created_at: :desc)
-    @records = @records.where("created_at >= ?", params[:start_date]) unless params[:start_date].blank?
-    @records = @records.where("created_at <= ?", DateTime.parse(params[:end_date]) + 23.hour) unless params[:end_date].blank?
+
+    today = DateTime.now
+
+    start_date = DateTime.parse(params[:start_date]) unless params[:start_date].blank?
+    start_date = Date.new(today.year, today.mon, 1) if params[:start_date].blank?
+    end_date = DateTime.parse(params[:end_date]) + 23.hour unless params[:end_date].blank?
+    end_date = start_date + 1.month if params[:end_date].blank?
+
+    @records = @records.where("created_at >= ?", start_date)
+    @records = @records.where("created_at <= ?", end_date)
     @records = @records.where(income: params[:income] == "T") unless params[:income].blank?
 
     @tendency = @records.group_by { |record| record[:created_at].to_date.to_s }
@@ -22,7 +30,7 @@ class AccountsController < ApplicationController
       init = record.income ? record.result - record.amount : record.result + record.amount
     end
 
-    @tendency = complete_values(@tendency, params[:start_date], params[:end_date], init) unless params[:start_date].blank? && params[:end_date].blank?
+    @tendency = complete_values(@tendency, start_date.to_date, end_date.to_date, init)
 
     @expence = @records.where(income: false).group_by { |record| record[:category] }
     @expence = grahp_data(@expence) { |value| value.map(&:amount).sum }
