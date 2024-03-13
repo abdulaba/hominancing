@@ -6,11 +6,12 @@
 
 .cards-list {
   max-height: 300px;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .cards-list::-webkit-scrollbar {
   width: 8px;
+  height: 4px;
 }
 
 .cards-list::-webkit-scrollbar-thumb {

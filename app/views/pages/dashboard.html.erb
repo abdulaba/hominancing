@@ -1,12 +1,12 @@
 <div class="container">
-  <div class="row">
+  <div class="d-flex justify-content-between cards-list">
       <% @accounts.each do |account| %>
-        <div class="col-2 my-3">
+        <div class="px-2 my-3">
           <%= render "accounts/account_card", account: account %>
         </div>
       <% end %>
   </div>
-  <%= form_with url: dashboard_path, method: :get, class: "row", data: {controller: "date-search"} do |f| %>
+  <%= form_with url: dashboard_path, method: :get, class: "row mt-5", data: {controller: "date-search"} do |f| %>
         <div class="col">
           <%= date_field_tag :start_date, params[:start_date],
           data: {date_search_target: "startDate", action: "change->date-search#setMin"},
@@ -17,16 +17,16 @@
           data: {date_search_target: "endDate", action: "change->date-search#setMax"},
           class:"form-control"  %>
         </div>
-        <%= submit_tag "filtrar", class: "col btn btn-outline-primary" %>
+        <%= submit_tag "filtrar", class: "col-3 btn btn-outline-primary" %>
       <% end %>
   <div class="row">
-    <div class="col-6 mb-5">
+    <div class="col-6 my-5">
       <%= line_chart @tendency, title: "Tendencia del saldo", colors: @colors, points: false %>
     </div>
-    <div class="col-6 mb-5">
+    <div class="col-6 my-5">
       <%= pie_chart @expence, title: "Gastos por categoria" %>
     </div>
-    <div class="col-6 mb-5">
+    <div class="col-6 my-5">
       <h5 class="text-center title">Proximos Pagos Programados</h5>
       <div class="cards-list">
         <% @fixeds.each do |fixed| %>
@@ -34,7 +34,7 @@
         <% end %>
       </div>
     </div>
-    <div class = "col-6 mb-5">
+    <div class = "col-6 my-5">
       <h5 class="text-center title">Proximos Planes</h5>
       <div class="cards-list">
         <% @plans.each do |plan| %>
