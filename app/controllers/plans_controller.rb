@@ -6,11 +6,12 @@ class PlansController < ApplicationController
     @plan = Plan.new
     @plans = policy_scope(Plan)
     @progress_percentages = @plans.map { |plan| calculate_progress_percentage(plan) }
-
   end
 
 def show
   authorize @plan
+  @record = Record.new
+  @form_err = false
   @balance_records = @plan.records.limit(10).order(created_at: :desc)
   @progress_percentage = calculate_progress_percentage(@plan) || 0
   @plan.reload

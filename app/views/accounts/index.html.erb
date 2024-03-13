@@ -1,16 +1,29 @@
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-3">
-      <h2>Nueva Cuenta</h2>
-      <%= render "new_account", account: Account.new, colors: @colors %>
-    </div>
-    <div class="col-8">
+  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#new-account-modal" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>">
+    +
+  </button>
+  <h1 class="text-center mt-3">Cuentas</h1>
+  <div class="row mt-3">
+    <div class="col-10 m-auto">
       <div class="row">
         <% @accounts.each do |account| %>
-          <div class="col-6 mb-3">
+          <div class="col-4 mb-3">
             <%= render "account_card", account: account %>
           </div>
         <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="new-account-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cambiar datos de cuenta</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "accounts/new_account", account: @account, colors: @colors %>
       </div>
     </div>
   </div>
