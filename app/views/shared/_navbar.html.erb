@@ -6,7 +6,8 @@
     </button>
     <!-- menu desplegable -->
       <% if user_signed_in? %>
-      <div class="navbar-links d-flex justify-content-between">
+      <div class="navbar-links d-flex justify-content-between w-50">
+        <%= link_to "Dashboard", dashboard_path, class:"text-decoration-none nav-link" %>
         <%= link_to "Cuentas", accounts_path, class:"text-decoration-none nav-link" %>
         <%= link_to "Registros", records_path, class:"text-decoration-none nav-link" %>
         <%= link_to "Gastos programados", fixeds_path, class:"text-decoration-none nav-link" %>
