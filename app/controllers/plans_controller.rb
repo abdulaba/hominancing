@@ -5,7 +5,6 @@ class PlansController < ApplicationController
   def index
     @plan = Plan.new
     @plans = policy_scope(Plan)
-    @progress_percentages = @plans.map { |plan| calculate_progress_percentage(plan) }
   end
 
 def show
@@ -13,7 +12,6 @@ def show
   @record = @plan.records.new
   @form_err = false
   @balance_records = @plan.records.limit(10).order(created_at: :desc)
-  @progress_percentage = calculate_progress_percentage(@plan) || 0
   @plan.reload
 
   respond_to do |format|
@@ -30,6 +28,8 @@ end
   def create
     @plan = Plan.new(plan_params)
     @plan.user = current_user
+    @plan.balance = 0
+    @plan.status = false
     authorize @plan
 
     if @plan.save
@@ -89,22 +89,5 @@ end
 
   def plan_params
     params.require(:plan).permit(:goal, :title, :user_id, :color, :date, :status, :balance)
-  end
-
-  def calculate_progress_percentage(plan)
-    total_income = plan.records.where(income: true).sum(:amount)
-    total_expense = plan.records.where(income: false).sum(:amount)
-
-    plan.balance = total_income - total_expense
-    plan.status = (plan.balance >= plan.goal)
-    plan.save
-
-    if plan.goal.zero?
-      return 0
-    elsif plan.status
-      return 100
-    else
-      return ((plan.balance.to_f / plan.goal) * 100).round(2)
-    end
   end
 end

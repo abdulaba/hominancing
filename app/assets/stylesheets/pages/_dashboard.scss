@@ -3,3 +3,17 @@
   font-family: 'Arial';
   color: #111111;
 }
+
+.cards-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.cards-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cards-list::-webkit-scrollbar-thumb {
+  background: #b9b9b9;
+  border-radius: 4px;
+}
