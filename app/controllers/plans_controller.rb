@@ -26,6 +26,8 @@ end
   def create
     @plan = Plan.new(plan_params)
     @plan.user = current_user
+    @plan.balance = 0
+    @plan.status = false
     authorize @plan
 
     if @plan.save

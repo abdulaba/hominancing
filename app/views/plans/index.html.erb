@@ -5,8 +5,10 @@
       <%= render 'form', plan: @plan, colors: @colors %>
     </div>
     <div class="col-8">
-      <% @plans.each_with_index do |plan| %>
-        <%= render "plan_card", plan: plan %>
+      <% if @plans.count > 0 %>
+        <% @plans.each do |plan| %>
+          <%= render "plan_card", plan: plan %>
+        <% end %>
       <% end %>
     </div>
   </div>
