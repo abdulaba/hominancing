@@ -5,6 +5,7 @@ class PlansController < ApplicationController
   def index
     @plan = Plan.new
     @plans = policy_scope(Plan)
+    @form_err = false
   end
 
 def show
@@ -35,7 +36,8 @@ end
     if @plan.save
       redirect_to plans_path, notice: "¡Plan creado!"
     else
-      render :new, status: :unprocessable_entity
+      @plans = policy_scope(Plan)
+      render "plans/index", status: :unprocessable_entity
     end
   end
 
