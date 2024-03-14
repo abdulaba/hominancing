@@ -1,6 +1,6 @@
-<div class="container mt-5">
+<div class="container">
   <div class="row">
-    <div class="col-md-12 mb-3">
+    <div class="col-sm-12">
       <% if @plan.status != 'culminado' %>
         <%= link_to plan_path(@plan), class: "text-decoration-none text-white" do %>
           <div class="card plan-card my-3" style="background-color: <%= @plan.color %>;">
