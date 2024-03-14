@@ -8,7 +8,7 @@ COLORS = %w[#670f22 #9a0526 #E20000 #ff4040 #FF7676
 
 ACCOUNTS = %w[bancamiga mercantil banplus banesco efectivo]
 
-CATEGORIES = %w[comida transporte servicios ropa otros]
+CATEGORIES = %w[Comida Compras Vivienda Transporte Salud Entretenimiento Comunicaciones Inversiones Otros]
 
 aaron = User.find_or_initialize_by(nickname: "Aaron", email: "aarondlista@gmail.com")
 unless User.exists?(aaron.id)

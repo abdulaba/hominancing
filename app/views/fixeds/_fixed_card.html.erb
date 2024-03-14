@@ -4,7 +4,7 @@
       <div>
         <%= fixed.title %>
         <div>
-          <i class="fa-solid fa-coins"></i>
+          <%= render "shared/category_icon", category: fixed.category %>
           <span class="mx-3 account-pill" style="background-color: <%= fixed.account.color %>;"> <%= fixed.account.name %> </span>
         </div>
       </div>

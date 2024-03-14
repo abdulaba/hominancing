@@ -96,7 +96,7 @@
           <%= f.input :income, label: "Tipo", as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
           <%= f.association :account, as: :hidden  %>
           <%= f.input :note, label: "Nota" %>
-          <%= f.input :category, label: "Categoría", as: :select, collection: %w[comida transporte servicios ropa otros] %>
+          <%= f.input :category, label: "Categoría", as: :select, collection: %w[Comida Compras Vivienda Transporte Salud Entretenimiento Comunicaciones Inversiones Otros], include_blank: false %>
           <%= f.submit value: "Crear registro", class: "button w-100" %>
         <% end %>
       </div>
