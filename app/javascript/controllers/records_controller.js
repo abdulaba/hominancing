@@ -2,54 +2,19 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="records"
 export default class extends Controller {
-  static values = {
-    month: Number,
-    year: Number,
-    open: Boolean
-  }
-
-  static targets = ["recordContainer", "showMore"]
+  static targets = ["info", "edit", "footer"]
 
   connect() {
+    console.log("Estoy funcionando");
   }
 
-  update() {
-    const months = {
-      0: "Enero",
-      1: "Febrero",
-      2: "Marzo",
-      3: "Abril",
-      4: "Mayo",
-      5: "Junio",
-      6: "Julio",
-      7: "Agosto",
-      8: "Septiembre",
-      9: "Octubre",
-      10: "Noviembre",
-      11: "Diciembre"
-    }
-
-    const url = `./records?month=${this.nextPageValue}&year=${this.yearValue}`;
-    fetch(url, { headers: { 'Accept': 'text/plain' } })
-      .then(res => res.text())
-      .then((data) => {
-        this.showMoreTarget.remove()
-        const h2 = document.createElement("h2");
-        h2.innerText = months[this.nextPageValue - 1]
-        this.recordContainerTarget.append(h2);
-        this.recordContainerTarget.innerHTML += "<hr>";
-        this.recordContainerTarget.innerHTML += data;
-        if (this.nextPageValue - 1 < 1) {
-          this.nextPageValue = 12;
-          this.yearValue -= 1;
-        } else {
-          this.nextPageValue -= 1;
-        }
-      });
-    }
-
-    openModal() {
-      const myModal = new bootstrap.Modal('#new-record-modal')
-      myModal.show()
-    }
+  displayForm() {
+    console.log(this.editTarget);
+    this.infoTarget.classList.toggle("hide");
+    this.infoTarget.classList.toggle("show");
+    this.editTarget.classList.toggle("hide");
+    this.editTarget.classList.toggle("show");
+    this.footerTarget.classList.toggle("hide");
+    this.footerTarget.classList.toggle("show");
+  }
 }

@@ -1,4 +1,4 @@
- <div class="modal fade" id="myModal<%= record.id %>" tabindex="-1">
+ <div class="modal fade" id="myModal<%= record.id %>" tabindex="-1" data-controller = "records">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -6,14 +6,26 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <%= render "accounts/account_card", account: record.account %>
-          <p><span class="fw-bold">Antiguo balance:</span> <%= record.income ? record.result - record.amount : record.result + record.amount %><p>
-          <p><span class="fw-bold">Monto del registro:</span> USD <%= record.amount %></p>
-          <p><span class="fw-bold">Nuevo balance:</span> <%= record.result %></p>
-          <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at.strftime('%d de %B del %Y') %></p>
+          <div class="show" data-records-target = "info">
+            <%= render "accounts/account_card", account: record.account %>
+            <p><span class="fw-bold">Antiguo balance:</span> <%= record.income ? record.result - record.amount : record.result + record.amount %><p>
+            <p><span class="fw-bold">Monto del registro:</span> USD <%= record.amount %></p>
+            <p><span class="fw-bold">Nuevo balance:</span> <%= record.result %></p>
+            <p><span class="fw-bold">Fecha de creación:</span> <%= record.created_at.strftime('%d de %B del %Y') %></p>
+          </div>
+          <div class="hide" data-records-target = "edit">
+            <%= simple_form_for record do |f| %>
+              <%= f.input :note %>
+              <%= f.input :category %>
+              <% if Time.now - record.created_at< 300 %>
+                <%= f.input :amount %>
+              <% end %>
+              <%= f.submit %>
+            <% end %>
+          </div>
         </div>
-          <div class="modal-footer">
-            <%= link_to "Editar", edit_record_path(record), class: "text-decoration-none btn btn-primary text-white" %>
+          <div class="modal-footer show" data-records-target = "footer">
+            <button class = "text-decoration-none btn btn-primary text-white" data-action = "click->records#displayForm">Editar</button>
             <% if Time.now - record.created_at < 300 %>
               <span data-controller = "destroy" data-destroy-title-value = "¿Seguro que quieres eliminar este registro?">
                 <i class="fa-solid fa-trash text-primary"data-action = "click->destroy#delete"></i>
