@@ -1,6 +1,6 @@
-<div class="container mt-5">
+<div class="container">
   <div class="row">
-    <div class="col-md-12 mb-3">
+    <div class="col-sm-12">
       <% if @plan.status != 'culminado' %>
         <%= link_to plan_path(@plan), class: "text-decoration-none text-white" do %>
           <div class="card plan-card my-5" style="background-color: <%= @plan.color %>;">
@@ -24,12 +24,15 @@
               <div class="ml-auto text-right">
                 <div class="mt-2">
                   <small>Fecha de meta: <%= @plan.date.strftime('%Y-%m-%d') %></small>
-                  <div class="d-flex">
+                  <div class="d-flex" data-controller = "destroy"
+                  data-destroy-title-value = "¿Seguro que quieres eliminar este plan?"
+                  data-destroy-message-value="No se eliminaran los registros asociados a este plan"
+                  >
                     <%= link_to "#", class: "text-decoration-none text-white me-2", "data-bs-toggle": "modal", "data-bs-target": "#editShowModal" do %>
                       <i class="fa-solid fa-pen"></i>
                     <% end %>
-                    <%= link_to plan_path(@plan), data: {turbo_method: :delete, turbo_confirm: "are you sure"}, class: "text-decoration-none text-white" do %>
-                      <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-trash" data-action = "click->destroy#delete"></i>
+                    <%= link_to plan_path(@plan), data: {turbo_method: :delete, destroy_target: "del"}, class: "d-none" do %>
                     <% end %>
                   </div>
                 </div>
