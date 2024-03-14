@@ -4,8 +4,7 @@ class Fixed < ApplicationRecord
 
   has_many :records
 
-  validates :amount, presence: true
-  validates :category, presence: true
+  validates :amount, :category, :periodicity, :start_date, :title, presence: true
 
   def next_pay
     today = DateTime.now

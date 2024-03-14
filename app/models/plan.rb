@@ -4,7 +4,7 @@ class Plan < ApplicationRecord
   has_many :records
 
   validates :goal, comparison: { greater_than: 0 }
-  validates :title, presence: true
+  validates :title, :date, presence: true
 
   def progress_percentage
     total_income = self.records.where(income: true).sum(:amount)
