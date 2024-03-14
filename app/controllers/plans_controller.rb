@@ -48,12 +48,14 @@ end
   def update
     authorize @plan
     if @plan.update(plan_params)
-      total_income = @plan.records.where(income: true).sum(:amount)
-      total_expense = @plan.records.where(income: false).sum(:amount)
+      total_income = 0
+      @plan.records.select(&:income).each { |record| total_income += record.amount }
+      total_expense = 0
+      @plan.records.reject(&:income).each { |record| total_expense += record.amount }
 
       @plan.balance = total_income - total_expense
       @plan.status = (@plan.balance >= @plan.goal)
-      @plan.save!
+      @plan.save
 
       if @plan.balance == @plan.goal
         @plan.update(status: 'culminado')
