@@ -4,11 +4,11 @@
   </button>
 
   <div class="row justify-content-center">
-    <div class="col-sm-12">
-      <% @plans.each do |plan| %>
+    <% @plans.each do |plan| %>
+      <div class="col-sm-12 mb-3">
         <%= render "plan_card", plan: plan %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 
 <div class="modal fade" id="form" tabindex="-1" aria-labelledby="fixedFormLabel" aria-hidden="true">
