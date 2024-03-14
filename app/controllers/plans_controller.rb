@@ -57,8 +57,8 @@ end
       @plan.status = (@plan.balance >= @plan.goal)
       @plan.save
 
-      if @plan.balance == @plan.goal
-        @plan.update(status: 'culminado')
+      if @plan.balance >= @plan.goal
+        @plan.update(status: true)
       end
 
       redirect_back fallback_location: root_path, notice: "¡Cambios hechos!"
