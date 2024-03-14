@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <div class="col-md-12 mb-3">
       <% if @plan.status != 'culminado' %>
@@ -24,8 +24,8 @@
               <div class="ml-auto text-right">
                 <div class="mt-2">
                   <small>Fecha de meta: <%= @plan.date.strftime('%Y-%m-%d') %></small>
-                  <div>
-                    <%= link_to "#", class: "text-decoration-none text-white", "data-bs-toggle": "modal", "data-bs-target": "#editShowModal" do %>
+                  <div class="d-flex">
+                    <%= link_to "#", class: "text-decoration-none text-white me-2", "data-bs-toggle": "modal", "data-bs-target": "#editShowModal" do %>
                       <i class="fa-solid fa-pen"></i>
                     <% end %>
                     <%= link_to plan_path(@plan), data: {turbo_method: :delete, turbo_confirm: "are you sure"}, class: "text-decoration-none text-white" do %>
@@ -35,13 +35,13 @@
                 </div>
               </div>
             </div>
-          <div class="plan-card progress mb-2" style="width: calc(100% - 30px); height: 10px; margin-left: 15px;">
+            <div class="plan-card progress mb-2" style="width: calc(100% - 30px); height: 10px; margin-left: 15px;">
               <div class="progress-bar rounded progress-bar-striped bg-success" role="progressbar"
                    style="width: <%= @plan.progress_percentage %>%;"
                    aria-valuenow="<%= @plan.progress_percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-              <div class="d-flex justify-content-between" style="margin-left: 15px; margin-right: 15px;">
+            <div class="d-flex justify-content-between px-3">
               <div>Balance: <%= number_to_currency(@plan.balance) %></div>
               <% if @plan.progress_percentage.present? %>
                 <div>Avance del progreso: <%= @plan.progress_percentage %> %</div>
@@ -55,18 +55,16 @@
     </div>
   </div>
 
-  <h2>Registros</h2>
+  <h2 class="mt-5">Registros</h2>
   <% @plan.records.each do |record| %>
     <%= render "records/record", record: record %>
     <%= render "records/record-modal", record: record %>
   <% end %>
 
-  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#newRecordModal" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>">
+  <button type="button" class="button-fixed bg-success mt-3" data-bs-toggle="modal" data-bs-target="#newRecordModal" data-render-more-target="openModal" data-controller="render-more" data-render-more-open-value="<%= @form_err %>">
     +
   </button>
 </div>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="editShowModal" tabindex="-1" aria-labelledby="editShowModalLabel" aria-hidden="true">
@@ -102,7 +100,8 @@
           <%= f.input :note %>
           <%= f.input :category %>
           <%= f.submit %>
-        <% end %>      </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

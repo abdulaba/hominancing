@@ -7,7 +7,7 @@
     <div class="col-10 m-auto">
       <div class="row">
         <% @accounts.each do |account| %>
-          <div class="col-4 mb-3">
+          <div class="col col-sm-6 col-lg-4 mb-3">
             <%= render "account_card", account: account %>
           </div>
         <% end %>
