@@ -2,18 +2,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-          <h5 class="modal-title">Crear un nuevo registro</h5>
+          <h3 class="modal-title">Crear un nuevo registro</h3>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <%= simple_form_for record do |f| %>
-            <%= f.input :amount %>
-            <%= f.input :income, as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
-            <%= f.association :account, collection: current_user.accounts %>
-            <%= f.association :plan, collection: current_user.plans %>
-            <%= f.input :note %>
-            <%= f.input :category %>
-            <%= f.submit %>
+            <%= f.input :amount, label: "Monto" %>
+            <%= f.input :income, label: "Tipo", as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
+            <%= f.association :account, label: "Cuenta", collection: current_user.accounts, include_blank: false %>
+            <%= f.association :plan, label: "Plan", collection: current_user.plans %>
+            <%= f.input :note, label: "Nota" %>
+            <%= f.input :category, label: "Categoría", as: :select, collection: %w[comida transporte servicios ropa otros], selected: "comida"%>
+            <%= f.submit value: "Crear registro", class: "button w-100" %>
           <% end %>
         </div>
     </div>

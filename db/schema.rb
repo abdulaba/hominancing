@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_134046) do
 
   create_table "records", force: :cascade do |t|
     t.float "amount"
-    t.string "category", default: "0"
+    t.string "category"
     t.string "note"
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
