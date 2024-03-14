@@ -40,7 +40,9 @@
       <h5 class="text-center title">Proximos Planes</h5>
       <div class="cards-list">
         <% @plans.each do |plan| %>
-          <%= render "plans/plan_card", plan: plan %>
+          <div class="mb-2">
+            <%= render "plans/plan_card", plan: plan %>
+          </div>
         <% end %>
       </div>
     </div>
