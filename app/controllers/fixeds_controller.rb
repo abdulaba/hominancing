@@ -55,8 +55,7 @@ class FixedsController < ApplicationController
     authorize @fixed
     if @fixed.records.count > 0
       @fixed.records.each do |record|
-        record.fixed = nil
-        record.save
+        record.update(fixed: nil)
       end
     end
 

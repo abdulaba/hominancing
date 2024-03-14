@@ -60,10 +60,14 @@ class RecordsController < ApplicationController
     old_amount = @record.amount
     if @record.update(record_params)
       @records.each do |record|
-        record.result += @record.income ? @record.amount - old_amount : -(@record.amount - old_amount)
+        record.result += @record.amount - old_amount
         record.save
       end
-      @record.account.balance += @record.income ? @record.amount - old_amount : -(@record.amount - old_amount)
+      if @record.income
+        @record.account.balance -= old_amount - @record.amount
+      else
+        @record.account.balance += old_amount - @record.amount
+      end
       @record.account.save
       redirect_to records_path, notice: "¡Cambios hechos!"
     else
