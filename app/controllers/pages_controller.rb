@@ -41,11 +41,11 @@ class PagesController < ApplicationController
       pies = create_pie_chart(records, start_date, end_date)
       result[:expences] << pies
       group = records.group_by { |record| record[:created_at].to_date.to_s }
-      group = grahp_data(group) { |value| value.last.result }
+      group = grahp_data(group) { |value| value.first.result }
       if records.count == 0
         init = account.balance
       else
-        record = records.first
+        record = records.last
         init = record.income ? record.result - record.amount : record.result + record.amount
       end
       group = complete_values(group, start_date.to_date, end_date.to_date, init)
