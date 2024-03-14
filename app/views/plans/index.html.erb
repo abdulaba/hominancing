@@ -1,21 +1,22 @@
-<div class="container mt-5">
-  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#form" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>">
-        +
-      </button>
-  <div class="row">
-    <div class="col-10 m-auto">
+<div class="containe mb-5">
+  <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#form" data-render-more-target="openModal" data-controller="render-more" data-render-more-open-value="<%= @form_err %>">
+    +
+  </button>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
       <% @plans.each do |plan| %>
         <%= render "plan_card", plan: plan %>
       <% end %>
     </div>
   </div>
-</div>
 
 <div class="modal fade" id="form" tabindex="-1" aria-labelledby="fixedFormLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Nuevo pago programado</h2>
+        <h2 class="modal-title">Nuevo pago programado</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
