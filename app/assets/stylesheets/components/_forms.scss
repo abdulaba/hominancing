@@ -1,0 +1,18 @@
+.modal-content {
+  border-radius: 12px;
+}
+
+.button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #e7bf0c;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  border: transparent;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #b19702;
+  }
+}
