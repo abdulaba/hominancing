@@ -61,7 +61,7 @@ end
         @plan.update(status: 'culminado')
       end
 
-      redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
+      redirect_back fallback_location: root_path, notice: "¡Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
     end
