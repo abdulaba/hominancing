@@ -14,11 +14,6 @@ def show
   @form_err = false
   @balance_records = @plan.records.limit(10).order(created_at: :desc)
   @plan.reload
-
-  respond_to do |format|
-    format.html
-    format.turbo_stream
-  end
 end
 
   def new
