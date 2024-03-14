@@ -6,7 +6,8 @@
     <%= f.input :income, label: "Tipo", as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
     <%= f.input :category, label: "Categoría", as: :select, collection: %w[comida transporte servicios ropa otros] %>
     <%= f.association :plan, collection: current_user.plans %>
-    <%= f.date_field :start_date, class: "form-control" %>
+    <%= f.label "Fecha de inicio" %>
+    <%= f.date_field :start_date, class: "form-control mb-3" %>
     <%= f.association :account, label: "Cuenta", collection: current_user.accounts, include_blank: false %>
     <%= f.submit value: text_button, class: "button w-100" %>
   <% end %>
