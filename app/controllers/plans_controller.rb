@@ -14,11 +14,6 @@ def show
   @form_err = false
   @balance_records = @plan.records.limit(10).order(created_at: :desc)
   @plan.reload
-
-  respond_to do |format|
-    format.html
-    format.turbo_stream
-  end
 end
 
   def new
@@ -48,18 +43,20 @@ end
   def update
     authorize @plan
     if @plan.update(plan_params)
-      total_income = @plan.records.where(income: true).sum(:amount)
-      total_expense = @plan.records.where(income: false).sum(:amount)
+      total_income = 0
+      @plan.records.select(&:income).each { |record| total_income += record.amount }
+      total_expense = 0
+      @plan.records.reject(&:income).each { |record| total_expense += record.amount }
 
       @plan.balance = total_income - total_expense
       @plan.status = (@plan.balance >= @plan.goal)
-      @plan.save!
+      @plan.save
 
-      if @plan.balance == @plan.goal
-        @plan.update(status: 'culminado')
+      if @plan.balance >= @plan.goal
+        @plan.update(status: true)
       end
 
-      redirect_to plan_path(@plan), notice: "¡Cambios hechos!"
+      redirect_back fallback_location: root_path, notice: "¡Cambios hechos!"
     else
       render :edit, status: :unprocessable_entity
     end
