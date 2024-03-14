@@ -1,10 +1,8 @@
+<button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#fixedForm" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>">
+  +
+</button>
 <div class="container">
   <div class="row mt-5">
-    <div class="col-3">
-      <button type="button" class="button-fixed bg-success" data-bs-toggle="modal" data-bs-target="#fixedForm" data-render-more-target = "openModal" data-controller = "render-more" data-render-more-open-value = "<%= @form_err %>">
-        +
-      </button>
-    </div>
     <div class="col-sm-12">
       <% @fixeds.each do |fixed| %>
         <%= render "fixed_card", fixed: fixed %>

@@ -7,12 +7,20 @@
   border-radius: 50%;
   border: none;
   position: fixed;
-  bottom: 50px;
+  bottom: 60px;
   right: 100px;
-  opacity: 0.5;
+  opacity: 0.8;
+  z-index: 100;
   transition: opacity ease-in 0.2s;
 }
 
 .button-fixed:hover{
   opacity: 1;
+}
+
+@media (max-width: 576px) {
+  .button-fixed {
+    bottom: 100px;
+    right: 30px;
+  }
 }

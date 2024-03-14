@@ -1,7 +1,7 @@
 <div class="container">
   <%= simple_form_for fixed do |f| %>
     <%= f.input :title %>
-    <%= f.input :periodicity, collection: [["Mensual", 0], ["Semanal", 1]]  %>
+    <%= f.input :periodicity, collection: [["Mensual", 0], ["Semanal", 1]], include_blank: false  %>
     <%= f.input :amount %>
     <%= f.input :income, as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
     <%= f.input :category %>
