@@ -4,7 +4,7 @@
     <%= f.input :periodicity, label: "Periodicidad", collection: [["Mensual", 0], ["Semanal", 1]], include_blank: false  %>
     <%= f.input :amount, label: "Monto" %>
     <%= f.input :income, label: "Tipo", as: :radio_buttons, collection: [[false, 'Egreso'], [true, 'Ingreso']], label_method: :second, value_method: :first %>
-    <%= f.input :category, label: "Categoría", as: :select, collection: %w[comida transporte servicios ropa otros] %>
+    <%= f.input :category, label: "Categoría", as: :select, collection: %w[Comida Compras Vivienda Transporte Salud Entretenimiento Comunicaciones Inversiones Otros] %>
     <%= f.association :plan, collection: current_user.plans %>
     <%= f.label "Fecha de inicio" %>
     <%= f.date_field :start_date, class: "form-control mb-3" %>

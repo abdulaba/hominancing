@@ -12,7 +12,7 @@
             <%= f.association :account, label: "Cuenta", collection: current_user.accounts, include_blank: false %>
             <%= f.association :plan, label: "Plan", collection: current_user.plans %>
             <%= f.input :note, label: "Nota" %>
-            <%= f.input :category, label: "Categoría", as: :select, collection: %w[comida transporte servicios ropa otros], selected: "comida"%>
+            <%= f.input :category, label: "Categoría", as: :select, collection: %w[Comida Compras Vivienda Transporte Salud Entretenimiento Comunicaciones Inversiones Otros], include_blank: false%>
             <%= f.submit value: "Crear registro", class: "button w-100" %>
           <% end %>
         </div>

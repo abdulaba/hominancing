@@ -20,8 +20,9 @@ class AccountsController < ApplicationController
     end_date = DateTime.parse(params[:end_date]) + 23.hour unless params[:end_date].blank?
     end_date = start_date + 1.month if params[:end_date].blank?
 
-    @records = @records.where("created_at >= ?", start_date)
     @records = @records.where("created_at <= ?", end_date)
+    last_previus_month_record = @records.order(created_at: :desc).first
+    @records = @records.where("created_at >= ?", start_date)
     @records = @records.where(income: params[:income] == "T") unless params[:income].blank?
 
     @tendency = @records.group_by { |record| record[:created_at].to_date.to_s }
@@ -29,6 +30,8 @@ class AccountsController < ApplicationController
 
     if @account.records.count == 0
       init = @account.balance
+    elsif @records.count == 0 && @account.records.count > 0
+      init = last_previus_month_record.result
     else
       record = @records.last
       init = record.income ? record.result - record.amount : record.result + record.amount
