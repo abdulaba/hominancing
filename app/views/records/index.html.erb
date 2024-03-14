@@ -22,7 +22,7 @@
       </div>
     <% end %>
     <% unless @records.empty? %>
-      <div class="col-9" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.created_at.month - 1 %>"  data-render-more-year-value = "<%= @records.last.created_at.year %>">
+      <div class="col" data-controller = "render-more" data-render-more-next-page-value = "<%= @records.last.created_at.month - 1 %>"  data-render-more-year-value = "<%= @records.last.created_at.year %>">
         <div class="record-container" data-render-more-target = "recordContainer">
           <div>
             <% @records.each do |record| %>
