@@ -9,7 +9,7 @@ class FetchDolarPriceJob < ApplicationJob
     res_serialized = URI.open(url).read
     res = JSON.parse(res_serialized)
 
-    price = CurrentDolarPrice.last
+    price = CurrentDolarPrice.last || CurrentDolarPrice.create(price: 0, old_price: 0)
     info = res
 
     date = DateTime.tomorrow
