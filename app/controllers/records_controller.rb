@@ -1,3 +1,6 @@
+require "open-uri"
+require "nokogiri"
+
 class RecordsController < ApplicationController
   before_action :set_record, only: %i[edit update destroy]
   before_action :set_sql_query, only: %i[index create]
@@ -12,7 +15,8 @@ class RecordsController < ApplicationController
       format.html # Follow regular flow of Rails
       format.text { render partial: "records", locals: { records: @records, show_more: @show_more }, formats: [:html] }
     end
-    fetch_dolar_price
+
+    fetch_dollar
   end
 
   def create
@@ -192,14 +196,16 @@ class RecordsController < ApplicationController
     end
   end
 
-  def fetch_dolar_price
-    require "json"
-    require "open-uri"
+  def fetch_dollar
+    url = "https://www.bcv.org.ve/seccionportal/tipo-de-cambio-oficial-del-bcv"
 
-    url = "https://pydolarvenezuela-api.vercel.app/api/v1/dollar/page?page=bcv&monitor=usd"
-    res_serialized = URI.open(url).read
-    @res = JSON.parse(res_serialized)
+    html_file = URI.open(url).read
+    html_doc = Nokogiri::HTML.parse(html_file)
 
-    @dolar_price = res.price
+    html_doc.search("#dolar").each do |element|
+      puts element.text.strip
+      puts element.attribute("href").value
+    end
   end
+
 end
