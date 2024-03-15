@@ -1,3 +1,6 @@
+require "open-uri"
+require "nokogiri"
+
 class RecordsController < ApplicationController
   before_action :set_record, only: %i[edit update destroy]
   before_action :set_sql_query, only: %i[index create]
@@ -6,12 +9,15 @@ class RecordsController < ApplicationController
 
   def index
     @date = @records.first.created_at unless @records.empty?
+    @dolar_price = CurrentDolarPrice.last.price
     @record = Record.new
     @form_err = false
     respond_to do |format|
       format.html # Follow regular flow of Rails
       format.text { render partial: "records", locals: { records: @records, show_more: @show_more }, formats: [:html] }
     end
+
+    fetch_dollar
   end
 
   def create
@@ -190,4 +196,16 @@ class RecordsController < ApplicationController
       return ((plan.balance.to_f / plan.goal) * 100).round(2)
     end
   end
+
+  def fetch_dollar
+    url = "https://alcambio.app/"
+
+    html_file = URI.open(url).read
+    html_doc = Nokogiri::HTML.parse(html_file)
+
+    html_doc.search(".").each do |element|
+      p "Content: #{element}"
+    end
+  end
+
 end
