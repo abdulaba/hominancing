@@ -1,0 +1,2 @@
+class CurrentDolarPrice < ApplicationRecord
+end
