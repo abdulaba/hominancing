@@ -6,6 +6,7 @@ class PlansController < ApplicationController
     @plan = Plan.new
     @plans = policy_scope(Plan)
     @form_err = false
+    @dolar_price = CurrentDolarPrice.last.price
   end
 
 def show
@@ -14,6 +15,8 @@ def show
   @form_err = false
   @balance_records = @plan.records.limit(10).order(created_at: :desc)
   @plan.reload
+  @dolar_price = CurrentDolarPrice.last.price
+
 end
 
   def new
@@ -81,9 +84,9 @@ end
   end
 
   def set_colors
-    @colors = %w[#670f22 #9a0526 #E20000 #ff4040 #FF7676
-                 #082338 #0303B5 #003785 #1465BB #2196F3
-                 #005200 #007B00 #258D19 #4EA93B #588100]
+    @colors = %w[#8C656C #7E8691 #BF978E #D9BBB4 #8BBF95
+                #141A26 #735774 #808C65 #40272B #D99191
+                #D97904 #4A5914 #3676A8 #048ABF #8298D9]
   end
 
   def plan_params

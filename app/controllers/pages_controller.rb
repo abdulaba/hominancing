@@ -5,6 +5,8 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    @dolar_price = CurrentDolarPrice.last.price
+
     @accounts = current_user.accounts
 
     today = DateTime.now
