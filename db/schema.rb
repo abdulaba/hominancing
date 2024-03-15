@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_12_134046) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_15_143322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_134046) do
     t.datetime "updated_at", null: false
     t.string "color"
     t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "current_dolar_prices", force: :cascade do |t|
+    t.float "price"
+    t.float "old_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fixeds", force: :cascade do |t|
@@ -54,7 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_12_134046) do
 
   create_table "records", force: :cascade do |t|
     t.float "amount"
-    t.string "category"
+    t.string "category", default: "0"
     t.string "note"
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false

@@ -82,3 +82,6 @@ gem "chartkick"
 
 # autorization
 gem "pundit"
+
+gem "sidekiq", "< 7"
+gem "sidekiq-failures", "~> 1.0"

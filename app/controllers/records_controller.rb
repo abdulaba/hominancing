@@ -9,6 +9,7 @@ class RecordsController < ApplicationController
 
   def index
     @date = @records.first.created_at unless @records.empty?
+    @dolar_price = CurrentDolarPrice.last.price
     @record = Record.new
     @form_err = false
     respond_to do |format|
@@ -197,14 +198,13 @@ class RecordsController < ApplicationController
   end
 
   def fetch_dollar
-    url = "https://www.bcv.org.ve/seccionportal/tipo-de-cambio-oficial-del-bcv"
+    url = "https://alcambio.app/"
 
     html_file = URI.open(url).read
     html_doc = Nokogiri::HTML.parse(html_file)
 
-    html_doc.search("#dolar").each do |element|
-      puts element.text.strip
-      puts element.attribute("href").value
+    html_doc.search(".").each do |element|
+      p "Content: #{element}"
     end
   end
 
