@@ -12,6 +12,7 @@ class RecordsController < ApplicationController
       format.html # Follow regular flow of Rails
       format.text { render partial: "records", locals: { records: @records, show_more: @show_more }, formats: [:html] }
     end
+    fetch_dolar_price
   end
 
   def create
@@ -189,5 +190,16 @@ class RecordsController < ApplicationController
     else
       return ((plan.balance.to_f / plan.goal) * 100).round(2)
     end
+  end
+
+  def fetch_dolar_price
+    require "json"
+    require "open-uri"
+
+    url = "https://pydolarvenezuela-api.vercel.app/api/v1/dollar/page?page=bcv&monitor=usd"
+    res_serialized = URI.open(url).read
+    @res = JSON.parse(res_serialized)
+
+    @dolar_price = res.price
   end
 end
