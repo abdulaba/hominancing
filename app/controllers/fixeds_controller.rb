@@ -5,6 +5,8 @@ class FixedsController < ApplicationController
     @fixed = Fixed.new
     @fixeds = current_user.fixeds.sort_by { |fix| fix.next_pay }
     @form_err = false
+    @dolar_price = CurrentDolarPrice.last.price
+
   end
 
   def show

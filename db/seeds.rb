@@ -2,9 +2,9 @@ Account.destroy_all
 Plan.destroy_all
 Fixed.destroy_all
 
-COLORS = %w[#670f22 #9a0526 #E20000 #ff4040 #FF7676
-        #082338 #0303B5 #003785 #1465BB #2196F3
-        #005200 #007B00 #258D19 #4EA93B #588100]
+COLORS = %w[#8C656C #7E8691 #BF978E #D9BBB4 #8BBF95
+            #141A26 #735774 #808C65 #40272B #D99191
+            #D97904 #4A5914 #3676A8 #048ABF #8298D9]
 
 ACCOUNTS = %w[bancamiga mercantil banplus banesco efectivo]
 
