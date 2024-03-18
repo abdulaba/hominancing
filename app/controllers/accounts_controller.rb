@@ -12,6 +12,7 @@ class AccountsController < ApplicationController
     @form_err = false
     @record = @account.records.new
     @records = @account.records.order(created_at: :desc)
+    @dolar_price = CurrentDolarPrice.last.price
 
     today = DateTime.now
 
