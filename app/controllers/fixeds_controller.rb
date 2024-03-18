@@ -12,6 +12,7 @@ class FixedsController < ApplicationController
   def show
     authorize @fixed
     @records = @fixed.records
+    @dolar_price = CurrentDolarPrice.last.price
 
     @record = Record.new(
       fixed: @fixed,
