@@ -1,38 +1,38 @@
-<div style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<%= image_path 'homi-1.jpg' %>'); height: 85vh; background-repeat: no-repeat; background-size: cover; background-position: center;">
-  <div class="container d-flex justify-content-center pt-5">
-    <div class="form-difuse w-50 p-4">
+<div style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<%= image_path 'homi-1.jpg' %>'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+  <div class="container my-5">
+    <div class="form-difuse col-lg-6 col-md-8 col-sm-12 m-auto p-4">
       <h2>Registrarse</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= f.error_notification %>
 
-  <div class="form-inputs p-4">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" },
-                label: "Correo electrónico" %>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" },
-                label: "Contraseña" %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" },
-                label: "Confirmar contraseña" %>
-    <%= f.input :nickname,
-                required: true,
-                input_html: { autocomplete: "Nickname" },
-                label: "Nombre de usuario" %>
-  </div>
+        <div class="form-inputs p-4">
+          <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" },
+                      label: "Correo electrónico" %>
+          <%= f.input :password,
+                      required: true,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { autocomplete: "new-password" },
+                      label: "Contraseña" %>
+          <%= f.input :password_confirmation,
+                      required: true,
+                      input_html: { autocomplete: "new-password" },
+                      label: "Confirmar contraseña" %>
+          <%= f.input :nickname,
+                      required: true,
+                      input_html: { autocomplete: "Nickname" },
+                      label: "Nombre de usuario" %>
+        </div>
 
-  <div class="form-actions text-center">
-          <%= f.button :submit, "Registrarse", class: "btn btn-primary btn-sm rounded-pill w-50 mt-2" %>
-  </div>
-<% end %>
+        <div class="form-actions text-center">
+                <%= f.button :submit, "Registrarse", class: "btn btn-primary btn-sm rounded-pill w-50 mt-2" %>
+        </div>
+      <% end %>
 
-<%= render "devise/shared/links" %>
+      <%= render "devise/shared/links" %>
      </div>
   </div>
 </div>
