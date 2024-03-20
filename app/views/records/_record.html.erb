@@ -4,7 +4,7 @@
     <span class="mx-3 account-pill" style="background-color: <%= record.account.color %>;"> <%= record.account.name %> </span>
   </div>
   <div class="d-flex align-items-center">
-    <p class="p-0 my-0"> Bs.D <%= record.amount %> </p>
+    <p class="p-0 my-0"> Bs. <%= record.amount %> </p>
     <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
     <p class="p-0 my-0"> USD <%= number_with_precision(record.amount / @dolar_price, precision: 2) %> </p>
     <i class="mx-3 fa-solid fa-arrow-trend-<%= record.income ? "up text-success" : "down text-danger" %>"></i>

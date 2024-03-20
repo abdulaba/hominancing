@@ -47,6 +47,10 @@ users.each do |user|
 
   hour = 0
 
+  user.accounts[1].records.create(category: "Otros", amount: 18400, result: 18400, income: true, created_at: DateTime.new(2024, 1, 1), note: "Pago mensual")
+  user.accounts[1].records.create(category: "Otros", amount: 18400, result: 18400, income: true, created_at: DateTime.new(2024, 2, 1), note: "Pago mensual")
+  user.accounts[1].records.create(category: "Otros", amount: 18400, result: 18400, income: true, created_at: DateTime.new(2024, 3, 1), note: "Pago mensual")
+
   (DateTime.new(2024, 1, 1)..DateTime.now).to_a.each do |date|
     next if [true, false].sample
     (0..5).to_a.sample.times do
