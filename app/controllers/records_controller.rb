@@ -16,14 +16,13 @@ class RecordsController < ApplicationController
       format.html # Follow regular flow of Rails
       format.text { render partial: "records", locals: { records: @records, show_more: @show_more }, formats: [:html] }
     end
-
-    fetch_dollar
   end
 
   def create
     @record = Record.new(record_params)
     authorize @record
     @record.result = 0
+    @dolar_price = CurrentDolarPrice.last.price
     if @record.save
       @form_err = false
       @record.result = @record.income ? @record.amount + @record.account.balance : @record.account.balance - @record.amount if @record.account.balance
@@ -64,6 +63,7 @@ class RecordsController < ApplicationController
     authorize @record
     @records = current_user.records.where(created_at: (Time.now - 5.minute)..(Time.now)).order(created_at: :desc)
     old_amount = @record.amount
+    @dolar_price = CurrentDolarPrice.last.price
     if @record.update(record_params)
       @records.each do |record|
         record.result += @record.amount - old_amount
@@ -196,16 +196,4 @@ class RecordsController < ApplicationController
       return ((plan.balance.to_f / plan.goal) * 100).round(2)
     end
   end
-
-  def fetch_dollar
-    url = "https://alcambio.app/"
-
-    html_file = URI.open(url).read
-    html_doc = Nokogiri::HTML.parse(html_file)
-
-    html_doc.search(".").each do |element|
-      p "Content: #{element}"
-    end
-  end
-
 end
