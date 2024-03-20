@@ -58,10 +58,18 @@
     </div>
   </div>
 
-  <h2 class="mt-5">Registros</h2>
-  <% @plan.records.each do |record| %>
-    <%= render "records/record", record: record %>
-    <%= render "records/record-modal", record: record %>
+  <% if @plan.records.empty? %>
+    <div class="position-relative mt-5 row">
+      <div class="sm-auto position-absolute top-50 start-50 translate-middle">
+        <h4 class="text-center text-secondary"> Aquí podrás ver los registros asociados a este plan. <br>¡Prueba a agregar uno!</h4>
+      </div>
+    </div>
+  <% else %>
+    <h2 class="mt-3">Registros</h2>
+    <% @plan.records.each do |record| %>
+      <%= render "records/record", record: record %>
+      <%= render "records/record-modal", record: record %>
+    <% end %>
   <% end %>
 
   <button type="button" class="button-fixed bg-success mt-3" data-bs-toggle="modal" data-bs-target="#newRecordModal" data-render-more-target="openModal" data-controller="render-more" data-render-more-open-value="<%= @form_err %>">

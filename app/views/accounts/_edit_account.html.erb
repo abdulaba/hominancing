@@ -1,10 +1,10 @@
 <%= simple_form_for(account) do |f| %>
-  <%= f.input :name %>
-  <%= f.input :color, as: :color, input_html: {list: "options"}%>
+  <%= f.input :name, label: "Nombre" %>
+  <%= f.input :color, label: "Color", as: :color, input_html: {list: "options"}%>
   <datalist id="options">
     <% colors.each do |color| %>
       <option value="<%= color %>"><%= color %></option>
     <% end %>
   </datalist>
-  <%= f.submit class: "button w-100" %>
+  <%= f.submit value: "Editar cuenta", class: "button w-100" %>
 <% end %>

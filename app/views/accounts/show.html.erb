@@ -26,13 +26,13 @@
     <div class="col-sm-12 col-lg-8 mb-5 d-flex align-items-center">
       <%= form_with url: account_path(@account), method: :get, class: "row d-flex align-items-end", data: {controller: "date-search"} do |f| %>
         <div class="col-6 col-lg mt-3">
-          <%= label_tag :start_date, "fecha de inicio" %>
+          <%= label_tag :start_date, "Fecha de inicio" %>
           <%= date_field_tag :start_date, params[:start_date],
           data: {date_search_target: "startDate", action: "change->date-search#setMin"},
           class:"form-control" %>
         </div>
         <div class="col-6 col-lg mt-3">
-          <%= label_tag :end_date, "fecha final" %>
+          <%= label_tag :end_date, "Fecha final" %>
           <%= date_field_tag :end_date, params[:end_date],
           data: {date_search_target: "endDate", action: "change->date-search#setMax"},
           class:"form-control"  %>
