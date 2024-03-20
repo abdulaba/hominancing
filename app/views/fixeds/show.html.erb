@@ -22,7 +22,7 @@
         <span class = "text-secondary"><%= @fixed.periodicity_to_s %></span>
       </div>
       <div>
-        <span>USD <%= @fixed.amount %></span>
+        <span>Bs <%= @fixed.amount %></span>
         <i class="mx-3 fa-solid fa-arrow-trend-<%= @fixed.income ? "up text-success" : "down text-danger" %>"></i>
         <div>
           <%= @fixed.next_pay == DateTime.now.to_date ? "Hoy" : @fixed.next_pay %>
@@ -39,9 +39,9 @@
       </div>
       <div class="row d-flex flex-wrap align-items-center justify-content-end">
         <div class="col-sm-12 col-lg-6 d-flex align-items-center m-0">
-          <p class="p-0 my-0"> USD <%= @record.amount %> </p>
+          <p class="p-0 my-0"> Bs. <%= @record.amount %> </p>
           <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
-          <p class="p-0 my-0"> Bs.D <%= @record.amount * 36 %> </p>
+          <p class="p-0 my-0"> USD. <%= @record.amount / @dolar_price %> </p>
           <i class="mx-3 fa-solid fa-arrow-trend-<%= @record.income ? "up text-success" : "down text-danger" %>"></i>
         </div>
         <div class="col-sm-12 col-lg-4 d-flex justify-content-end">
