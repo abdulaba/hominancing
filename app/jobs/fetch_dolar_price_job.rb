@@ -5,7 +5,7 @@ class FetchDolarPriceJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    url = "https://pydolarvenezuela-api.vercel.app/api/v1/dollar/page?page=bcv&monitor=usd"
+    url = "https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv&monitor=usd"
     res_serialized = URI.open(url).read
     res = JSON.parse(res_serialized)
 
