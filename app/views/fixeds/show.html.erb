@@ -41,7 +41,7 @@
         <div class="col-sm-12 col-lg-6 d-flex align-items-center m-0">
           <p class="p-0 my-0"> Bs. <%= @record.amount %> </p>
           <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
-          <p class="p-0 my-0"> USD. <%= @record.amount / @dolar_price %> </p>
+          <p class="p-0 my-0"> USD. number_with_precision(@record.amount / @dolar_price, precision: 2) </p>
           <i class="mx-3 fa-solid fa-arrow-trend-<%= @record.income ? "up text-success" : "down text-danger" %>"></i>
         </div>
         <div class="col-sm-12 col-lg-4 d-flex justify-content-end">
