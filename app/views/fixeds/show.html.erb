@@ -22,7 +22,7 @@
         <span class = "text-secondary"><%= @fixed.periodicity_to_s %></span>
       </div>
       <div>
-        <span><%= @fixed.amount %></span>
+        <span>USD <%= @fixed.amount %></span>
         <i class="mx-3 fa-solid fa-arrow-trend-<%= @fixed.income ? "up text-success" : "down text-danger" %>"></i>
         <div>
           <%= @fixed.next_pay == DateTime.now.to_date ? "Hoy" : @fixed.next_pay %>
@@ -60,6 +60,12 @@
     </div>
   <% end %>
 
+
+  <% if @records.empty? && !(@fixed.next_pay == DateTime.now.to_date) %>
+    <div class="w-75 m-auto position-absolute top-50 start-50 translate-middle">
+      <h4 class="text-center text-secondary"> Aquí podrás ver los registros generados tras un pago programado. <br> ¡Recuerda estar pendiente de la fecha de pago!</h4>
+    </div>
+  <% end %>
   <% @records.each do |record| %>
     <%= render "records/record", record: record %>
   <% end %>

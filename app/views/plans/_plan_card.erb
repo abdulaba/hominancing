@@ -6,9 +6,9 @@
         <div class="d-lg-flex flex-column">
           <div>
             <div><%= plan.title %></div>
-            <div>Bs.<%= plan.goal %>
+            <div>Bs. <%= plan.goal %>
                 <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
-                <%= number_with_precision(plan.goal / @dolar_price, precision: 2) %></div>
+                USD. <%= number_with_precision(plan.goal / @dolar_price, precision: 2) %></div>
             <% if plan.status == 'culminado' || plan.balance >= plan.goal %>
               <div>Estado: Culminado</div>
             <% else %>
@@ -21,7 +21,7 @@
         <small>Fecha de meta: <%= plan.date.strftime('%Y-%m-%d') if plan.date.present? %></small>
         <div class="mt-2">Balance: Bs. <%=(plan.balance) %>
             <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
-            <%= number_with_precision(plan.balance / @dolar_price, precision: 2) %></div>
+            USD. <%= number_with_precision(plan.balance / @dolar_price, precision: 2) %></div>
         <% if plan.progress_percentage.present? %>
           Avance del progreso: <%= plan.progress_percentage %> %
         <% end %>
