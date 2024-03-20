@@ -13,9 +13,9 @@
       </div>
       <div class="d-flex align-items-center">
         <div>
-          <span>USD. <%= fixed.amount %>
+          <span>Bs. <%= fixed.amount %>
               <i class="mx-3 fa-solid fa-arrow-right-arrow-left"></i>
-              Bs. <%= number_with_precision(fixed.amount * @dolar_price, precision: 2) %></span>
+              USD. <%= number_with_precision(fixed.amount / @dolar_price, precision: 2) %></span>
           <i class="mx-3 fa-solid fa-arrow-trend-<%= fixed.income ? "up text-success" : "down text-danger" %>"></i>
           <div>
             <%= fixed.next_pay == DateTime.now.to_date ? "Hoy" : fixed.next_pay %>
